@@ -1,0 +1,17 @@
+{
+    "canisters": {
+        "qr": {
+            "main": "app/main.mo"
+        }
+    },
+    "defaults": {
+        "build": {
+            "output": "target"
+        },
+        "start": {
+            "address": "127.0.0.1",
+            "port": 8080
+        }
+    },
+    "version": 1
+}
