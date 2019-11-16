@@ -14,7 +14,7 @@ import Nat "../src/nat.mo";
 
 type List<T> = List.List<T>;
 
-module GF256 {
+module Galois {
 
   public let logs = [
     000, 001, 025, 002, 050, 026, 198, 003, 223, 051,
@@ -92,9 +92,7 @@ module GF256 {
     alogs[m]
   };
 
-  public type Elem = {
-    unbox : Nat
-  };
+  public type Elem = { unbox : Nat };
 
   public func elemNew(n : Nat) : Elem {
     { unbox = n % 256 }
@@ -148,9 +146,7 @@ module GF256 {
     (elem3, elemSub(elem1, elem3))
   };
 
-  public type Poly = {
-    unbox : List<Elem>
-  };
+  public type Poly = { unbox : List<Elem> };
 
   public func polyNew(coeffs : [Nat]) : Poly {
     func step(n : Nat, accum : List<Elem>) : List<Elem> {
@@ -247,10 +243,7 @@ module GF256 {
     { unbox = List.map<Elem, Elem>(poly.unbox, scale) }
   };
 
-  public type Term = {
-    coeff : Elem;
-    order : Int
-  };
+  public type Term = { coeff : Elem; order : Int };
 
   public func polyAddTerm(poly : Poly, term : Term) : Poly {
     let n = if (term.order <= 0) 0 else abs(term.order);
