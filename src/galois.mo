@@ -102,6 +102,14 @@ module Galois {
     debug_show(elem.unbox)
   };
 
+  public func elemToBit(elem : Elem) : Bool {
+    elem.unbox > 0
+  };
+
+  public func elemFromBit(bit : Bool) : Elem {
+    if bit { unbox = 1 } else { unbox = 0 }
+  };
+
   public func elemToBits(elem : Elem) : List<Bool> {
     Nat.Nat.natToBits(elem.unbox)
   };
@@ -167,6 +175,14 @@ module Galois {
         "[" # List.foldLeft<Elem, Text>(tail, base, step) # "]"
       }
     }
+  };
+
+  public func polyToBits(poly : Poly) : List<Bool> {
+    List.map<Elem, Bool>(poly.unbox, elemToBit)
+  };
+
+  public func polyFromBits(bits : List<Bool>) : Poly {
+    { unbox = List.map<Bool, Elem>(bits, elemFromBit) }
   };
 
   public func polyLen(poly : Poly) : Nat {
