@@ -6,14 +6,27 @@
  * Stability   : Experimental
  */
 
+import List "mo:stdlib/list.mo";
+
+type List<T> = List.List<T>;
+
 module Spec {
 
-  type ErrorCorrection = { #L; #M; #Q; #H };
+  public type ErrorCorrection = { #L; #M; #Q; #H };
 
-  type Matrix = { unbox : [[Bool]] };
+  public type Matrix = { unbox : [[Bool]] };
 
-  type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
+  public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
 
-  type Version = { unbox : Nat };
+  public type Version = { unbox : Nat };
+
+  public func ecToBits(level : ErrorCorrection) : List<Bool> {
+    switch (level) {
+      case (#L) { ?(false, ?(true, null)) };
+      case (#M) { ?(false, ?(false, null)) };
+      case (#Q) { ?(true, ?(true, null)) };
+      case (#H) { ?(true, ?(false, null)) }
+    }
+  };
 
 }
