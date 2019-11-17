@@ -21,7 +21,7 @@ module Format {
   public func encode(level : ErrorCorrection, mask : List<Bool>) : List<Bool> {
     let input = List.append<Bool>(Spec.Spec.ecToBits(level), mask);
     let poly1 = Galois.Galois.polyFromBits(Util.Util.padRight(10, input));
-    let poly2 = Galois.Galois.polyNew([1,0,1,0,0,1,1,0,1,1,1]);
+    let poly2 = Galois.Galois.polyFromBits(Nat.Nat.natToBits(1335));
     Util.Util.padLeftTo(
       15,
       Nat.Nat.natToBits(
