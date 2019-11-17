@@ -6,6 +6,7 @@
  * Stability   : Experimental
  */
 
+import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 import Spec "../src/spec.mo";
 import Version "../src/version.mo";
@@ -17,7 +18,10 @@ let versionNew = Spec.Spec.versionNew;
 actor Test {
 
   func runAnnexDTest() {
-    assert (natFromBits(encode(versionNew(7))) == 31892)
+    let bits = encode(versionNew(7));
+    let n = List.len<Bool>(bits);
+    assert (natFromBits(bits) == 31892);
+    assert (n == 18)
   };
 
   let tests = [runAnnexDTest];

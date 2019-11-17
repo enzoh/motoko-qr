@@ -7,6 +7,7 @@
  */
 
 import Format "../src/format.mo";
+import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 
 let encode = Format.Format.encode;
@@ -16,7 +17,10 @@ actor Test {
 
   func runAnnexCTest() {
     let mask = ?(true, ?(false, ?(true, null)));
-    assert (natFromBits(encode(#M, mask)) == 16590);
+    let bits = encode(#M, mask);
+    let n = List.len<Bool>(bits);
+    assert (natFromBits(bits) == 16590);
+    assert (n == 15)
   };
 
   let tests = [runAnnexCTest];
