@@ -96,4 +96,4 @@ module Nat {
     n
   };
 
-};
+}
