@@ -15,11 +15,11 @@ import Util "../src/util.mo";
 type ErrorCorrection = Spec.Spec.ErrorCorrection;
 type List<T> = List.List<T>;
 
+let bitPadLeftTo = Util.Util.bitPadLeftTo;
+let bitPadRight = Util.Util.bitPadRight;
 let natFromBits = Nat.Nat.natFromBits;
 let natToBits = Nat.Nat.natToBits;
 let natXor = Nat.Nat.natXor;
-let padLeftTo = Util.Util.padLeftTo;
-let padRight = Util.Util.padRight;
 let polyAdd = Galois.Galois.polyAdd;
 let polyDivMod = Galois.Galois.polyDivMod;
 let polyFromBits = Galois.Galois.polyFromBits;
@@ -29,9 +29,9 @@ module Format {
 
   public func encode(level : ErrorCorrection, mask : List<Bool>) : List<Bool> {
     let input = List.append<Bool>(Spec.Spec.ecToBits(level), mask);
-    let poly1 = polyFromBits(padRight(10, input));
+    let poly1 = polyFromBits(bitPadRight(10, input));
     let poly2 = polyFromBits(natToBits(1335));
-    padLeftTo(15, natToBits(natXor(natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
+    bitPadLeftTo(15, natToBits(natXor(natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
   };
 
 }
