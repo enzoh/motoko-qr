@@ -8,11 +8,14 @@
 
 import Array "mo:stdlib/array.mo";
 import List "mo:stdlib/list.mo";
+import Nat "../src/nat.mo";
 import Prelude "mo:stdlib/prelude.mo";
 
-import Nat "../src/nat.mo";
-
 type List<T> = List.List<T>;
+
+let natFromBits = Nat.Nat.natFromBits;
+let natToBits = Nat.Nat.natToBits;
+let natXor = Nat.Nat.natXor;
 
 module Galois {
 
@@ -111,11 +114,11 @@ module Galois {
   };
 
   public func elemToBits(elem : Elem) : List<Bool> {
-    Nat.Nat.natToBits(elem.unbox)
+    natToBits(elem.unbox)
   };
 
   public func elemFromBits(bits : List<Bool>) : Elem {
-    elemNew(Nat.Nat.natFromBits(bits))
+    elemNew(natFromBits(bits))
   };
 
   public func elemEq(elem1 : Elem, elem2 : Elem) : Bool {
@@ -123,7 +126,7 @@ module Galois {
   };
 
   public func elemAdd(elem1 : Elem, elem2 : Elem) : Elem {
-    { unbox = Nat.Nat.natXor(elem1.unbox, elem2.unbox) }
+    { unbox = natXor(elem1.unbox, elem2.unbox) }
   };
 
   public func elemSub(elem1 : Elem, elem2 : Elem) : Elem {
