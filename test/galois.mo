@@ -16,7 +16,7 @@ let polyDivMod = Galois.Galois.polyDivMod;
 let polyEq = Galois.Galois.polyEq;
 let polyNew = Galois.Galois.polyNew;
 
-actor UnitTester {
+actor Test {
 
   func runElemMulDivTests() {
     for (i in range(1, 255)) {

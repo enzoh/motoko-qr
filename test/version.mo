@@ -14,7 +14,7 @@ let encode = Version.Version.encode;
 let natFromBits = Nat.Nat.natFromBits;
 let versionNew = Spec.Spec.versionNew;
 
-actor UnitTester {
+actor Test {
 
   func runAnnexDTest() {
     assert (natFromBits(encode(versionNew(7))) == 31892)

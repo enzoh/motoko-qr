@@ -12,7 +12,7 @@ import Nat "../src/nat.mo";
 let encode = Format.Format.encode;
 let natFromBits = Nat.Nat.natFromBits;
 
-actor UnitTester {
+actor Test {
 
   func runAnnexCTest() {
     let mask = ?(true, ?(false, ?(true, null)));
