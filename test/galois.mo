@@ -8,11 +8,27 @@
 
 import Galois "../src/galois.mo";
 
+let elemDiv = Galois.Galois.elemDiv;
+let elemEq = Galois.Galois.elemEq;
+let elemMul = Galois.Galois.elemMul;
+let elemNew = Galois.Galois.elemNew;
 let polyDivMod = Galois.Galois.polyDivMod;
 let polyEq = Galois.Galois.polyEq;
 let polyNew = Galois.Galois.polyNew;
 
 actor UnitTester {
+
+  func runElemMulDivTests() {
+    for (i in range(1, 255)) {
+      for (j in range(1, 255)) {
+        let a = elemNew(i);
+        let b = elemNew(j);
+        let c = elemMul(a, b);
+        let d = elemDiv(c, b);
+        assert elemEq(a, d)
+      }
+    }
+  };
 
   type PolyDivModTest = {
     dividend : [Nat];
@@ -67,12 +83,15 @@ actor UnitTester {
         polyNew(test.dividend),
         polyNew(test.divisor)
       );
-      assert (polyEq(expectQuotient, actualQuotient));
-      assert (polyEq(expectRemainder, actualRemainder))
+      assert polyEq(expectQuotient, actualQuotient);
+      assert polyEq(expectRemainder, actualRemainder)
     }
   };
 
-  let tests = [runPolyDivModTests];
+  let tests = [
+    runElemMulDivTests,
+    runPolyDivModTests
+  ];
 
   public func run() {
     for (test in tests.vals()) test()
