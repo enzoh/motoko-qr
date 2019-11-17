@@ -1,0 +1,34 @@
+/**
+ * Module      : version.mo
+ * Copyright   : 2019 Enzo Haussecker
+ * License     : Apache 2.0 with LLVM Exception
+ * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
+ * Stability   : Experimental
+ */
+
+import Galois "../src/galois.mo";
+import List "mo:stdlib/list.mo";
+import Nat "../src/nat.mo";
+import Spec "../src/spec.mo";
+import Util "../src/util.mo";
+
+type List<T> = List.List<T>;
+type Version = Spec.Spec.Version;
+
+let bitPadLeftTo = Util.Util.bitPadLeftTo;
+let bitPadRight = Util.Util.bitPadRight;
+let natToBits = Nat.Nat.natToBits;
+let polyAdd = Galois.Galois.polyAdd;
+let polyDivMod = Galois.Galois.polyDivMod;
+let polyFromBits = Galois.Galois.polyFromBits;
+let polyToBits = Galois.Galois.polyToBits;
+
+module Version {
+
+  public func encode(version : Version) : List<Bool> {
+    let poly1 = polyFromBits(bitPadRight(12, natToBits(version.unbox)));
+    let poly2 = polyFromBits(natToBits(7973));
+    bitPadLeftTo(18, polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1)))
+  };
+
+}

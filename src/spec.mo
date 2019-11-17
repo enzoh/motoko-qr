@@ -7,6 +7,7 @@
  */
 
 import List "mo:stdlib/list.mo";
+import Prelude "mo:stdlib/prelude.mo";
 
 type List<T> = List.List<T>;
 
@@ -19,6 +20,14 @@ module Spec {
   public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
 
   public type Version = { unbox : Nat };
+
+  public func versionNew(n : Nat) : Version {
+    if (n > 40 or n == 0) {
+      Prelude.printLn("Error: Invalid version!");
+      Prelude.unreachable()
+    };
+    { unbox = n }
+  };
 
   public func ecToBits(level : ErrorCorrection) : List<Bool> {
     switch (level) {
