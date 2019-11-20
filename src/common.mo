@@ -1,5 +1,5 @@
 /**
- * Module      : spec.mo
+ * Module      : common.mo
  * Copyright   : 2019 Enzo Haussecker
  * License     : Apache 2.0 with LLVM Exception
  * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
@@ -11,7 +11,7 @@ import Prelude "mo:stdlib/prelude.mo";
 
 type List<T> = List.List<T>;
 
-module Spec {
+module Common {
 
   public type ErrorCorrection = { #L; #M; #Q; #H };
 

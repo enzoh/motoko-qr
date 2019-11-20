@@ -6,18 +6,18 @@
  * Stability   : Experimental
  */
 
+import Common "../src/common.mo";
 import Galois "../src/galois.mo";
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
-import Spec "../src/spec.mo";
 import Util "../src/util.mo";
 
-type ErrorCorrection = Spec.Spec.ErrorCorrection;
+type ErrorCorrection = Common.Common.ErrorCorrection;
 type List<T> = List.List<T>;
 
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let bitPadRight = Util.Util.bitPadRight;
-let getECIBits = Spec.Spec.getECIBits;
+let getECIBits = Common.Common.getECIBits;
 let natFromBits = Nat.Nat.natFromBits;
 let natToBits = Nat.Nat.natToBits;
 let natXor = Nat.Nat.natXor;

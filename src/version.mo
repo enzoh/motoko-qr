@@ -6,14 +6,14 @@
  * Stability   : Experimental
  */
 
+import Common "../src/common.mo";
 import Galois "../src/galois.mo";
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
-import Spec "../src/spec.mo";
 import Util "../src/util.mo";
 
 type List<T> = List.List<T>;
-type Version = Spec.Spec.Version;
+type Version = Common.Common.Version;
 
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let bitPadRight = Util.Util.bitPadRight;
