@@ -28,7 +28,10 @@ let polyToBits = Galois.Galois.polyToBits;
 
 module Format {
 
-  public func encode(level : ErrorCorrection, mask : List<Bool>) : List<Bool> {
+  public func formatEncode(
+    level : ErrorCorrection,
+    mask : List<Bool>
+  ) : List<Bool> {
     let input = List.append<Bool>(getECIBits(level), mask);
     let poly1 = polyFromBits(bitPadRight(10, input));
     let poly2 = polyFromBits(natToBits(1335));

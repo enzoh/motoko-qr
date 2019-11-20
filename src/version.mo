@@ -34,7 +34,7 @@ module Version {
     { unbox = n }
   };
 
-  public func encode(version : Version) : List<Bool> {
+  public func versionEncode(version : Version) : List<Bool> {
     let poly1 = polyFromBits(bitPadRight(12, natToBits(version.unbox)));
     let poly2 = polyFromBits(natToBits(7973));
     bitPadLeftTo(18, polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1)))
