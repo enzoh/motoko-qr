@@ -17,6 +17,7 @@ type List<T> = List.List<T>;
 
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let bitPadRight = Util.Util.bitPadRight;
+let getECIBits = Spec.Spec.getECIBits;
 let natFromBits = Nat.Nat.natFromBits;
 let natToBits = Nat.Nat.natToBits;
 let natXor = Nat.Nat.natXor;
@@ -28,7 +29,7 @@ let polyToBits = Galois.Galois.polyToBits;
 module Format {
 
   public func encode(level : ErrorCorrection, mask : List<Bool>) : List<Bool> {
-    let input = List.append<Bool>(Spec.Spec.ecToBits(level), mask);
+    let input = List.append<Bool>(getECIBits(level), mask);
     let poly1 = polyFromBits(bitPadRight(10, input));
     let poly2 = polyFromBits(natToBits(1335));
     bitPadLeftTo(15, natToBits(natXor(natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
