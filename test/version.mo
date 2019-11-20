@@ -8,12 +8,11 @@
 
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
-import Spec "../src/spec.mo";
 import Version "../src/version.mo";
 
 let encode = Version.Version.encode;
 let natFromBits = Nat.Nat.natFromBits;
-let versionNew = Spec.Spec.versionNew;
+let versionNew = Version.Version.versionNew;
 
 actor Test {
 
