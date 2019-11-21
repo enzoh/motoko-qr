@@ -30,7 +30,7 @@ module Common {
     }
   };
 
-  public func getCCILen(version : Version, mode : Mode) : Nat {
+  public func cciLen(version : Version, mode : Mode) : Nat {
     let n = version.unbox;
     let i =
       if (09 >= n and n >= 01) 0 else
