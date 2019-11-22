@@ -160,11 +160,7 @@ module Galois {
   public type Poly = { unbox : List<Elem> };
 
   public func polyNew(coeffs : [Nat]) : Poly {
-    func step(n : Nat, accum : List<Elem>) : List<Elem> {
-      List.push<Elem>(elemNew(n), accum)
-    };
-    let base = List.nil<Elem>();
-    { unbox = Array.foldr<Nat, List<Elem>>(step, base, coeffs) }
+    { unbox = List.fromArray<Nat>(coeffs) }
   };
 
   public func polyShow(poly : Poly) : Text {

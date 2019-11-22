@@ -30,12 +30,13 @@ module Common {
   };
 
   public func getECIBits(level : ErrorCorrection) : List<Bool> {
-    switch (level) {
-      case (#L) { ?(false, ?(true, null)) };
-      case (#M) { ?(false, ?(false, null)) };
-      case (#Q) { ?(true, ?(true, null)) };
-      case (#H) { ?(true, ?(false, null)) }
-    }
+    let bits = switch (level) {
+      case (#L) { [false, true] };
+      case (#M) { [false, false] };
+      case (#Q) { [true, true] };
+      case (#H) { [true, false] }
+    };
+    List.fromArray<Bool>(bits)
   };
 
   public func cciLen(version : Version, mode : Mode) : Nat {

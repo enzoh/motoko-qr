@@ -16,8 +16,7 @@ let natFromBits = Nat.Nat.natFromBits;
 actor Test {
 
   func runAnnexCTest() {
-    let mask = ?(true, ?(false, ?(true, null)));
-    let bits = formatEncode(#M, mask);
+    let bits = formatEncode(#M, List.fromArray([true, false, true]));
     let n = List.len<Bool>(bits);
     assert (natFromBits(bits) == 16590);
     assert (n == 15)

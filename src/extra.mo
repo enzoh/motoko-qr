@@ -13,31 +13,8 @@ type List<T> = List.List<T>;
 
 module Extra {
 
-  public func splitAt<X>(n : Nat, xs : List<X>) : (List<X>, List<X>) {
-    if (n == 0) {
-      (List.nil<X>(), xs)
-    } else {
-      func rec(n : Nat, xs : List<X>) : (List<X>, List<X>) {
-        switch (List.pop<X>(xs)) {
-          case (null, _) {
-            (List.nil<X>(), List.nil<X>())
-          };
-          case (?h, t) {
-            if (n == 1) {
-              (List.singleton<X>(h), t)
-            } else {
-              let (l, r) = rec(n - 1, t);
-              (List.push<X>(h, l), r)
-            }
-          }
-        }
-      };
-      rec(n, xs)
-    }
-  };
-
   public func chunksOf<X>(n : Nat, xs : List<X>) : List<List<X>> {
-    let (l, r) = splitAt<X>(n, xs);
+    let (l, r) = List.splitAt<X>(n, xs);
     if (List.isNil<X>(l)) {
       List.nil<List<X>>()
     } else {
