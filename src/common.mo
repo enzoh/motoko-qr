@@ -21,7 +21,7 @@ module Common {
 
   public type Version = { unbox : Nat };
 
-  public func versionNew(n : Nat) : Version {
+  public func version(n : Nat) : Version {
     if (n > 40 or n == 0) {
       Prelude.printLn("Error: Invalid version!");
       Prelude.unreachable()
