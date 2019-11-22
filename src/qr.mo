@@ -17,7 +17,7 @@ type List<T> = List.List<T>;
 
 let genericEncode = Generic.Generic.genericEncode;
 let numericEncode = Numeric.Numeric.numericEncode;
-let version = Common.Common.version;
+let versionNew = Common.Common.versionNew;
 
 module QR {
 
@@ -74,6 +74,6 @@ module QR {
     accum
   };
 
-  public let qrVersion = version;
+  public let qrVersion = versionNew;
 
 }
