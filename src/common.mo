@@ -8,10 +8,8 @@
 
 import List "mo:stdlib/list.mo";
 import Prelude "mo:stdlib/prelude.mo";
-import Version "../src/version.mo"
 
 type List<T> = List.List<T>;
-type Version = Version.Version.Version;
 
 module Common {
 
@@ -20,6 +18,16 @@ module Common {
   public type Matrix = { unbox : [[Bool]] };
 
   public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
+
+  public type Version = { unbox : Nat };
+
+  public func versionNew(n : Nat) : Version {
+    if (n > 40 or n == 0) {
+      Prelude.printLn("Error: Invalid version!");
+      Prelude.unreachable()
+    };
+    { unbox = n }
+  };
 
   public func getECIBits(level : ErrorCorrection) : List<Bool> {
     switch (level) {

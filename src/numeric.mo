@@ -13,11 +13,10 @@ import Nat "../src/nat.mo";
 import Option "mo:stdlib/option.mo";
 import Prelude "mo:stdlib/prelude.mo";
 import Util "../src/util.mo";
-import Version "../src/version.mo"
 
 type List<T> = List.List<T>;
 type Mode = Common.Common.Mode;
-type Version = Version.Version.Version;
+type Version = Common.Common.Version;
 
 let bitPadLeft = Util.Util.bitPadLeft;
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
