@@ -7,6 +7,7 @@
  */
 
 import List "mo:stdlib/list.mo";
+import Prim "mo:prim";
 
 type List<T> = List.List<T>;
 
@@ -56,7 +57,7 @@ module Nat {
     while test {
       a := b % 256;
       b := b / 256;
-      bytes := List.push<Word8>(natToWord8(a), bytes);
+      bytes := List.push<Word8>(Prim.natToWord8(a), bytes);
       test := b > 0;
     };
     bytes
@@ -66,7 +67,7 @@ module Nat {
     var n = 0;
     var i = 0;
     List.foldRight<Word8, ()>(bytes, (), func (byte, _) {
-      n += word8ToNat(byte) * 256 ** i;
+      n += Prim.word8ToNat(byte) * 256 ** i;
       i += 1;
     });
     n

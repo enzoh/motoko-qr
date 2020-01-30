@@ -1,7 +1,16 @@
 {
     "canisters": {
+        "format": {
+            "main": "test/format.mo"
+        },
+        "galois": {
+            "main": "test/galois.mo"
+        },
         "qr": {
             "main": "app/main.mo"
+        },
+        "version": {
+            "main": "test/version.mo"
         }
     },
     "defaults": {
@@ -12,6 +21,5 @@
             "address": "127.0.0.1",
             "port": 8080
         }
-    },
-    "version": 1
+    }
 }

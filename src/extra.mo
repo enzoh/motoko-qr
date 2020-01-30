@@ -8,6 +8,7 @@
 
 import List "mo:stdlib/list.mo";
 import Option "mo:stdlib/option.mo";
+import Prim "mo:prim";
 
 type List<T> = List.List<T>;
 
@@ -30,7 +31,7 @@ module Extra {
   };
 
   public func isDigit(char : Char) : Bool {
-    charToWord32(char) - charToWord32('0') <= (9 : Word32)
+    Prim.charToWord32(char) - Prim.charToWord32('0') <= (9 : Word32)
   };
 
 }

@@ -7,6 +7,7 @@
  */
 
 import Galois "../src/galois.mo";
+import Iter "mo:stdlib/iter.mo";
 
 let elemDiv = Galois.Galois.elemDiv;
 let elemEq = Galois.Galois.elemEq;
@@ -19,8 +20,8 @@ let polyNew = Galois.Galois.polyNew;
 actor Test {
 
   func runElemMulDivTests() {
-    for (i in range(1, 255)) {
-      for (j in range(1, 255)) {
+    for (i in Iter.range(1, 255)) {
+      for (j in Iter.range(1, 255)) {
         let a = elemNew(i);
         let b = elemNew(j);
         let c = elemMul(a, b);

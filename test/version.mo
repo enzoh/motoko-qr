@@ -6,13 +6,14 @@
  * Stability   : Experimental
  */
 
+import Common "../src/common.mo";
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 import Version "../src/version.mo";
 
 let natFromBits = Nat.Nat.natFromBits;
 let versionEncode = Version.Version.versionEncode;
-let versionNew = Version.Version.versionNew;
+let versionNew = Common.Common.versionNew;
 
 actor Test {
 

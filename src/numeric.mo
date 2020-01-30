@@ -12,6 +12,7 @@ import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 import Option "mo:stdlib/option.mo";
 import Prelude "mo:stdlib/prelude.mo";
+import Prim "mo:prim";
 import Util "../src/util.mo";
 
 type List<T> = List.List<T>;
@@ -76,7 +77,9 @@ module Numeric {
     let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (char, accum) {
       if (isDigit(char)) {
         Option.map<Nat, Nat>(func (a) {
-          let b = word32ToNat(charToWord32(char) - charToWord32('0'));
+          let b = Prim.word32ToNat(
+            Prim.charToWord32(char) - Prim.charToWord32('0')
+          );
           10 * a + b
         }, accum)
       } else {

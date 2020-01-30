@@ -10,6 +10,7 @@ import Array "mo:stdlib/array.mo";
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 import Prelude "mo:stdlib/prelude.mo";
+import Prim "mo:prim";
 
 type List<T> = List.List<T>;
 
@@ -160,7 +161,11 @@ module Galois {
   public type Poly = { unbox : List<Elem> };
 
   public func polyNew(coeffs : [Nat]) : Poly {
-    { unbox = List.fromArray<Nat>(coeffs) }
+    func step(n : Nat, accum : List<Elem>) : List<Elem> {
+      List.push<Elem>(elemNew(n), accum)
+    };
+    let base = List.nil<Elem>();
+    { unbox = Array.foldr<Nat, List<Elem>>(step, base, coeffs) }
   };
 
   public func polyShow(poly : Poly) : Text {
@@ -199,7 +204,7 @@ module Galois {
   };
 
   public func polyOrder(poly : Poly) : Int {
-    abs(polyLen(polyTrim(poly))) - 1
+    Prim.abs(polyLen(polyTrim(poly))) - 1
   };
 
   public func polyLeadCoeff(poly : Poly) : Elem {
@@ -261,12 +266,12 @@ module Galois {
   public type Term = { coeff : Elem; order : Int };
 
   public func polyAddTerm(poly : Poly, term : Term) : Poly {
-    let n = if (term.order <= 0) 0 else abs(term.order);
+    let n = if (term.order <= 0) 0 else Prim.abs(term.order);
     polyAdd(poly, polyPadRight(n, polyNew([term.coeff.unbox])))
   };
 
   public func polyMulTerm(poly : Poly, term : Term) : Poly {
-    let n = if (term.order <= 0) 0 else abs(term.order);
+    let n = if (term.order <= 0) 0 else Prim.abs(term.order);
     polyScale(term.coeff, polyPadRight(n, poly))
   };
 
