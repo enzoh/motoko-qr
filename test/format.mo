@@ -10,12 +10,11 @@ import Format "../src/format.mo";
 import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 
-let formatEncode = Format.Format.formatEncode;
-
-actor Test {
+actor {
 
   func runAnnexCTest() {
-    let bits = formatEncode(#M, List.fromArray<Bool>([true, false, true]));
+    let mask = List.fromArray<Bool>([true, false, true]);
+    let bits = Format.formatEncode(#M, mask);
     let n = List.len<Bool>(bits);
     assert (Nat.natFromBits(bits) == 16590);
     assert (n == 15)

@@ -9,24 +9,16 @@
 import Galois "../src/galois.mo";
 import Iter "mo:stdlib/iter.mo";
 
-let elemDiv = Galois.Galois.elemDiv;
-let elemEq = Galois.Galois.elemEq;
-let elemMul = Galois.Galois.elemMul;
-let elemNew = Galois.Galois.elemNew;
-let polyDivMod = Galois.Galois.polyDivMod;
-let polyEq = Galois.Galois.polyEq;
-let polyNew = Galois.Galois.polyNew;
-
-actor Test {
+actor {
 
   func runElemMulDivTests() {
     for (i in Iter.range(1, 255)) {
       for (j in Iter.range(1, 255)) {
-        let a = elemNew(i);
-        let b = elemNew(j);
-        let c = elemMul(a, b);
-        let d = elemDiv(c, b);
-        assert elemEq(a, d)
+        let a = Galois.elemNew(i);
+        let b = Galois.elemNew(j);
+        let c = Galois.elemMul(a, b);
+        let d = Galois.elemDiv(c, b);
+        assert Galois.elemEq(a, d)
       }
     }
   };
@@ -78,14 +70,14 @@ actor Test {
 
   func runPolyDivModTests() {
     for (test in polyDivModTests.vals()) {
-      let expectQuotient = polyNew(test.quotient);
-      let expectRemainder = polyNew(test.remainder);
-      let (actualQuotient, actualRemainder) = polyDivMod(
-        polyNew(test.dividend),
-        polyNew(test.divisor)
+      let expectQuotient = Galois.polyNew(test.quotient);
+      let expectRemainder = Galois.polyNew(test.remainder);
+      let (actualQuotient, actualRemainder) = Galois.polyDivMod(
+        Galois.polyNew(test.dividend),
+        Galois.polyNew(test.divisor)
       );
-      assert polyEq(expectQuotient, actualQuotient);
-      assert polyEq(expectRemainder, actualRemainder)
+      assert Galois.polyEq(expectQuotient, actualQuotient);
+      assert Galois.polyEq(expectRemainder, actualRemainder)
     }
   };
 

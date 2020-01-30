@@ -12,9 +12,7 @@ import Nat "../src/nat.mo";
 import Prelude "mo:stdlib/prelude.mo";
 import Prim "mo:prim";
 
-type List<T> = List.List<T>;
-
-module Galois {
+module {
 
   type List<T> = List.List<T>;
 

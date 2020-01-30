@@ -9,17 +9,13 @@
 import Prelude "mo:stdlib/prelude.mo";
 import QR "../src/qr.mo";
 
-let qrEncode = QR.QR.qrEncode;
-let qrShow = QR.QR.qrShow;
-let qrVersion = QR.QR.qrVersion;
-
-actor App {
+actor {
 
   public func example() : async Text {
-    let result = qrEncode(qrVersion(1), #M, #Numeric, "01234567");
+    let result = QR.qrEncode(QR.qrVersion(1), #M, #Numeric, "01234567");
     switch result {
       case (?matrix) {
-        qrShow(matrix)
+        QR.qrShow(matrix)
       };
       case _ {
         Prelude.printLn("Error: Invalid input!");

@@ -9,7 +9,7 @@
 import List "mo:stdlib/list.mo";
 import Prim "mo:prim";
 
-module Nat {
+module {
 
   type List<T> = List.List<T>;
 

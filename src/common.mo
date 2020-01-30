@@ -9,9 +9,9 @@
 import List "mo:stdlib/list.mo";
 import Prelude "mo:stdlib/prelude.mo";
 
-type List<T> = List.List<T>;
+module {
 
-module Common {
+  type List<T> = List.List<T>;
 
   public type ErrorCorrection = { #L; #M; #Q; #H };
 

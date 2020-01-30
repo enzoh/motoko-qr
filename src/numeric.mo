@@ -15,21 +15,18 @@ import Prelude "mo:stdlib/prelude.mo";
 import Prim "mo:prim";
 import Util "../src/util.mo";
 
-type List<T> = List.List<T>;
-type Mode = Common.Common.Mode;
-type Version = Common.Common.Version;
+module {
 
-let cciLen = Common.Common.cciLen;
-let isDigit = Extra.Extra.isDigit;
-let textToList = Extra.Extra.textToList;
+  type List<T> = List.List<T>;
 
-module Numeric {
-
-  public func numericEncode(version : Version, text : Text) : ?List<Bool> {
+  public func numericEncode(
+    version : Common.Version,
+    text : Text
+  ) : ?List<Bool> {
 
     // Define mode and character count indicators.
     let mi = Util.bitPadLeft(3, List.singleton<Bool>(true));
-    let cci = Util.bitPadLeftTo(cciLen(version, #Numeric), Nat.natToBits(text.len()));
+    let cci = Util.bitPadLeftTo(Common.cciLen(version, #Numeric), Nat.natToBits(text.len()));
 
     // Define metadata and terminator.
     let header = List.append<Bool>(mi, cci);
@@ -41,7 +38,7 @@ module Numeric {
     };
 
     // 
-    let chunks = List.chunksOf<Char>(3, textToList(text));
+    let chunks = List.chunksOf<Char>(3, Extra.textToList(text));
 
     // 
     func step(chunk : List<Char>, accum : ?List<Bool>) : ?List<Bool> {
@@ -71,7 +68,7 @@ module Numeric {
 
     //
     let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (char, accum) {
-      if (isDigit(char)) {
+      if (Extra.isDigit(char)) {
         Option.map<Nat, Nat>(func (a) {
           let b = Prim.word32ToNat(
             Prim.charToWord32(char) - Prim.charToWord32('0')

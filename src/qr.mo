@@ -13,21 +13,17 @@ import Numeric "../src/numeric.mo";
 import Option "mo:stdlib/option.mo";
 import Prelude "mo:stdlib/prelude.mo";
 
-type List<T> = List.List<T>;
+module {
 
-let genericEncode = Generic.Generic.genericEncode;
-let numericEncode = Numeric.Numeric.numericEncode;
-let versionNew = Common.Common.versionNew;
+  type List<T> = List.List<T>;
 
-module QR {
+  public type Version = Common.Version;
 
-  public type Version = Common.Common.Version;
+  public type ErrorCorrection = Common.ErrorCorrection;
 
-  public type ErrorCorrection = Common.Common.ErrorCorrection;
+  public type Mode = Common.Mode;
 
-  public type Mode = Common.Common.Mode;
-
-  public type Matrix = Common.Common.Matrix;
+  public type Matrix = Common.Matrix;
 
   public func qrEncode(
     version : Version,
@@ -50,11 +46,11 @@ module QR {
           Prelude.unreachable()
         };
         case (#Numeric) {
-          numericEncode(version, text)
+          Numeric.numericEncode(version, text)
         };
       },
       func (data) {
-        genericEncode(version, level, data)
+        Generic.genericEncode(version, level, data)
       }
     )
   };
@@ -74,6 +70,6 @@ module QR {
     accum
   };
 
-  public let qrVersion = versionNew;
+  public let qrVersion = Common.versionNew;
 
 }

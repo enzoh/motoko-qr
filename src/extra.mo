@@ -10,9 +10,9 @@ import List "mo:stdlib/list.mo";
 import Option "mo:stdlib/option.mo";
 import Prim "mo:prim";
 
-type List<T> = List.List<T>;
+module {
 
-module Extra {
+  type List<T> = List.List<T>;
 
   public func textToList(text : Text) : List<Char> {
     let get = text.chars().next;
