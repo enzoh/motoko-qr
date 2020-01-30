@@ -14,11 +14,9 @@ import Prim "mo:prim";
 
 type List<T> = List.List<T>;
 
-let natFromBits = Nat.Nat.natFromBits;
-let natToBits = Nat.Nat.natToBits;
-let natXor = Nat.Nat.natXor;
-
 module Galois {
+
+  type List<T> = List.List<T>;
 
   public let logs = [
     000, 001, 025, 002, 050, 026, 198, 003, 223, 051,
@@ -115,11 +113,11 @@ module Galois {
   };
 
   public func elemToBits(elem : Elem) : List<Bool> {
-    natToBits(elem.unbox)
+    Nat.natToBits(elem.unbox)
   };
 
   public func elemFromBits(bits : List<Bool>) : Elem {
-    elemNew(natFromBits(bits))
+    elemNew(Nat.natFromBits(bits))
   };
 
   public func elemEq(elem1 : Elem, elem2 : Elem) : Bool {
@@ -127,7 +125,7 @@ module Galois {
   };
 
   public func elemAdd(elem1 : Elem, elem2 : Elem) : Elem {
-    { unbox = natXor(elem1.unbox, elem2.unbox) }
+    { unbox = Nat.natXor(elem1.unbox, elem2.unbox) }
   };
 
   public func elemSub(elem1 : Elem, elem2 : Elem) : Elem {

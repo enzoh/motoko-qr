@@ -18,9 +18,6 @@ type List<T> = List.List<T>;
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let bitPadRight = Util.Util.bitPadRight;
 let getECIBits = Common.Common.getECIBits;
-let natFromBits = Nat.Nat.natFromBits;
-let natToBits = Nat.Nat.natToBits;
-let natXor = Nat.Nat.natXor;
 let polyAdd = Galois.Galois.polyAdd;
 let polyDivMod = Galois.Galois.polyDivMod;
 let polyFromBits = Galois.Galois.polyFromBits;
@@ -34,8 +31,8 @@ module Format {
   ) : List<Bool> {
     let input = List.append<Bool>(getECIBits(level), mask);
     let poly1 = polyFromBits(bitPadRight(10, input));
-    let poly2 = polyFromBits(natToBits(1335));
-    bitPadLeftTo(15, natToBits(natXor(natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
+    let poly2 = polyFromBits(Nat.natToBits(1335));
+    bitPadLeftTo(15, Nat.natToBits(Nat.natXor(Nat.natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
   };
 
 }

@@ -11,14 +11,13 @@ import List "mo:stdlib/list.mo";
 import Nat "../src/nat.mo";
 
 let formatEncode = Format.Format.formatEncode;
-let natFromBits = Nat.Nat.natFromBits;
 
 actor Test {
 
   func runAnnexCTest() {
     let bits = formatEncode(#M, List.fromArray<Bool>([true, false, true]));
     let n = List.len<Bool>(bits);
-    assert (natFromBits(bits) == 16590);
+    assert (Nat.natFromBits(bits) == 16590);
     assert (n == 15)
   };
 

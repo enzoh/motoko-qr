@@ -23,7 +23,6 @@ let bitPadLeft = Util.Util.bitPadLeft;
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let cciLen = Common.Common.cciLen;
 let isDigit = Extra.Extra.isDigit;
-let natToBits = Nat.Nat.natToBits;
 let textToList = Extra.Extra.textToList;
 
 module Numeric {
@@ -32,7 +31,7 @@ module Numeric {
 
     // Define mode and character count indicators.
     let mi = bitPadLeft(3, List.singleton<Bool>(true));
-    let cci = bitPadLeftTo(cciLen(version, #Numeric), natToBits(text.len()));
+    let cci = bitPadLeftTo(cciLen(version, #Numeric), Nat.natToBits(text.len()));
 
     // Define metadata and terminator.
     let header = List.append<Bool>(mi, cci);
@@ -88,7 +87,7 @@ module Numeric {
 
     // 
     switch (p, n) {
-      case (?a, ?b) { ?bitPadLeftTo(a, natToBits(b)) };
+      case (?a, ?b) { ?bitPadLeftTo(a, Nat.natToBits(b)) };
       case _ null
     }
 

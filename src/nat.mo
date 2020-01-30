@@ -9,9 +9,9 @@
 import List "mo:stdlib/list.mo";
 import Prim "mo:prim";
 
-type List<T> = List.List<T>;
-
 module Nat {
+
+  type List<T> = List.List<T>;
 
   public func natNot(a : Nat) : Nat {
     natMap(a, func (x) { ^ x })
