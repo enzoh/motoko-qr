@@ -22,7 +22,6 @@ type Version = Common.Common.Version;
 let bitPadLeft = Util.Util.bitPadLeft;
 let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let cciLen = Common.Common.cciLen;
-let chunksOf = Extra.Extra.chunksOf;
 let isDigit = Extra.Extra.isDigit;
 let natToBits = Nat.Nat.natToBits;
 let textToList = Extra.Extra.textToList;
@@ -45,7 +44,7 @@ module Numeric {
     };
 
     // 
-    let chunks = chunksOf<Char>(3, textToList(text));
+    let chunks = List.chunksOf<Char>(3, textToList(text));
 
     // 
     func step(chunk : List<Char>, accum : ?List<Bool>) : ?List<Bool> {

@@ -14,15 +14,6 @@ type List<T> = List.List<T>;
 
 module Extra {
 
-  public func chunksOf<X>(n : Nat, xs : List<X>) : List<List<X>> {
-    let (l, r) = List.splitAt<X>(n, xs);
-    if (List.isNil<X>(l)) {
-      List.nil<List<X>>()
-    } else {
-      List.push<List<X>>(l, chunksOf<X>(n, r))
-    }
-  };
-
   public func textToList(text : Text) : List<Char> {
     let get = text.chars().next;
     List.tabulate<Char>(text.len(), func _ {
