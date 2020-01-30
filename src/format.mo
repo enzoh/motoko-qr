@@ -15,8 +15,6 @@ import Util "../src/util.mo";
 type ErrorCorrection = Common.Common.ErrorCorrection;
 type List<T> = List.List<T>;
 
-let bitPadLeftTo = Util.Util.bitPadLeftTo;
-let bitPadRight = Util.Util.bitPadRight;
 let getECIBits = Common.Common.getECIBits;
 let polyAdd = Galois.Galois.polyAdd;
 let polyDivMod = Galois.Galois.polyDivMod;
@@ -30,9 +28,9 @@ module Format {
     mask : List<Bool>
   ) : List<Bool> {
     let input = List.append<Bool>(getECIBits(level), mask);
-    let poly1 = polyFromBits(bitPadRight(10, input));
+    let poly1 = polyFromBits(Util.bitPadRight(10, input));
     let poly2 = polyFromBits(Nat.natToBits(1335));
-    bitPadLeftTo(15, Nat.natToBits(Nat.natXor(Nat.natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
+    Util.bitPadLeftTo(15, Nat.natToBits(Nat.natXor(Nat.natFromBits(polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1))), 21522)))
   };
 
 }

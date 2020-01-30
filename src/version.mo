@@ -16,8 +16,6 @@ import Util "../src/util.mo";
 type List<T> = List.List<T>;
 type Version = Common.Common.Version;
 
-let bitPadLeftTo = Util.Util.bitPadLeftTo;
-let bitPadRight = Util.Util.bitPadRight;
 let polyAdd = Galois.Galois.polyAdd;
 let polyDivMod = Galois.Galois.polyDivMod;
 let polyFromBits = Galois.Galois.polyFromBits;
@@ -26,9 +24,10 @@ let polyToBits = Galois.Galois.polyToBits;
 module Version {
 
   public func versionEncode(version : Version) : List<Bool> {
-    let poly1 = polyFromBits(bitPadRight(12, Nat.natToBits(version.unbox)));
+  	let input = Nat.natToBits(version.unbox);
+    let poly1 = polyFromBits(Util.bitPadRight(12, input));
     let poly2 = polyFromBits(Nat.natToBits(7973));
-    bitPadLeftTo(18, polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1)))
+    Util.bitPadLeftTo(18, polyToBits(polyAdd(poly1, polyDivMod(poly1, poly2).1)))
   };
 
 }

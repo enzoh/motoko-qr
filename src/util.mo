@@ -8,9 +8,9 @@
 
 import List "mo:stdlib/list.mo";
 
-type List<T> = List.List<T>;
-
 module Util {
+
+  type List<T> = List.List<T>;
 
   public func bitPadLeft(n : Nat, bits : List<Bool>) : List<Bool> {
     List.append<Bool>(List.replicate<Bool>(n, false), bits)

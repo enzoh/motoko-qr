@@ -19,8 +19,6 @@ type List<T> = List.List<T>;
 type Mode = Common.Common.Mode;
 type Version = Common.Common.Version;
 
-let bitPadLeft = Util.Util.bitPadLeft;
-let bitPadLeftTo = Util.Util.bitPadLeftTo;
 let cciLen = Common.Common.cciLen;
 let isDigit = Extra.Extra.isDigit;
 let textToList = Extra.Extra.textToList;
@@ -30,8 +28,8 @@ module Numeric {
   public func numericEncode(version : Version, text : Text) : ?List<Bool> {
 
     // Define mode and character count indicators.
-    let mi = bitPadLeft(3, List.singleton<Bool>(true));
-    let cci = bitPadLeftTo(cciLen(version, #Numeric), Nat.natToBits(text.len()));
+    let mi = Util.bitPadLeft(3, List.singleton<Bool>(true));
+    let cci = Util.bitPadLeftTo(cciLen(version, #Numeric), Nat.natToBits(text.len()));
 
     // Define metadata and terminator.
     let header = List.append<Bool>(mi, cci);
@@ -87,7 +85,7 @@ module Numeric {
 
     // 
     switch (p, n) {
-      case (?a, ?b) { ?bitPadLeftTo(a, Nat.natToBits(b)) };
+      case (?a, ?b) { ?Util.bitPadLeftTo(a, Nat.natToBits(b)) };
       case _ null
     }
 
