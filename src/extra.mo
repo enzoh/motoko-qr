@@ -1,6 +1,6 @@
 /**
  * Module      : extra.mo
- * Copyright   : 2019 Enzo Haussecker
+ * Copyright   : 2020 DFINITY Stiftung
  * License     : Apache 2.0 with LLVM Exception
  * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
  * Stability   : Experimental

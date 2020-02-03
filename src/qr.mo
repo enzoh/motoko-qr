@@ -1,9 +1,9 @@
 /**
  * Module      : qr.mo
- * Copyright   : 2019 Enzo Haussecker
- * License     : Apache 2.0
+ * Copyright   : 2020 DFINITY Stiftung
+ * License     : Apache 2.0 with LLVM Exception
  * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
- * Stability   : Experimental
+ * Stability   : Stable
  */
 
 import Common "../src/common.mo";
