@@ -1,9 +1,9 @@
 /**
- * Module      : numeric.mo
- * Copyright   : 2020 DFINITY Stiftung
- * License     : Apache 2.0 with LLVM Exception
- * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
- * Stability   : Experimental
+ * Module     : numeric.mo
+ * Copyright  : 2020 DFINITY Stiftung
+ * License    : Apache 2.0 with LLVM Exception
+ * Maintainer : Enzo Haussecker <enzo@dfinity.org>
+ * Stability  : Experimental
  */
 
 import Common "../src/common.mo";
