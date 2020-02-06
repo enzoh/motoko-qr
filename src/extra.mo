@@ -6,8 +6,8 @@
  * Stability  : Experimental
  */
 
-import List "mo:stdlib/list.mo";
-import Option "mo:stdlib/option.mo";
+import List "mo:stdlib/list";
+import Option "mo:stdlib/option";
 import Prim "mo:prim";
 
 module {

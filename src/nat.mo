@@ -6,7 +6,7 @@
  * Stability  : Stable
  */
 
-import List "mo:stdlib/list.mo";
+import List "mo:stdlib/list";
 import Prim "mo:prim";
 
 module {

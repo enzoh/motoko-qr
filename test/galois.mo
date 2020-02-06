@@ -6,8 +6,8 @@
  * Stability  : Stable
  */
 
-import Galois "../src/galois.mo";
-import Iter "mo:stdlib/iter.mo";
+import Galois "../src/galois";
+import Iter "mo:stdlib/iter";
 
 actor {
 

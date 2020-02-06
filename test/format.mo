@@ -6,9 +6,9 @@
  * Stability  : Stable
  */
 
-import Format "../src/format.mo";
-import List "mo:stdlib/list.mo";
-import Nat "../src/nat.mo";
+import Format "../src/format";
+import List "mo:stdlib/list";
+import Nat "../src/nat";
 
 actor {
 

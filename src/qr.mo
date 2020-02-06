@@ -6,12 +6,12 @@
  * Stability  : Stable
  */
 
-import Common "../src/common.mo";
-import Generic "../src/generic.mo";
-import List "mo:stdlib/list.mo";
-import Numeric "../src/numeric.mo";
-import Option "mo:stdlib/option.mo";
-import Prelude "mo:stdlib/prelude.mo";
+import Common "../src/common";
+import Generic "../src/generic";
+import List "mo:stdlib/list";
+import Numeric "../src/numeric";
+import Option "mo:stdlib/option";
+import Prelude "mo:stdlib/prelude";
 
 module {
 

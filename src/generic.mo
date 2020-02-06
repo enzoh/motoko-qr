@@ -6,9 +6,9 @@
  * Stability   : Experimental
  */
 
-import Common "../src/common.mo";
-import List "mo:stdlib/list.mo";
-import Prelude "mo:stdlib/prelude.mo";
+import Common "../src/common";
+import List "mo:stdlib/list";
+import Prelude "mo:stdlib/prelude";
 
 module {
 

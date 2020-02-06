@@ -6,8 +6,8 @@
  * Stability  : Stable
  */
 
-import Prelude "mo:stdlib/prelude.mo";
-import QR "../src/qr.mo";
+import Prelude "mo:stdlib/prelude";
+import QR "../src/qr";
 
 actor {
 

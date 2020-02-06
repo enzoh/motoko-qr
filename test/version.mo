@@ -6,10 +6,10 @@
  * Stability  : Stable
  */
 
-import Common "../src/common.mo";
-import List "mo:stdlib/list.mo";
-import Nat "../src/nat.mo";
-import Version "../src/version.mo";
+import Common "../src/common";
+import List "mo:stdlib/list";
+import Nat "../src/nat";
+import Version "../src/version";
 
 actor {
 

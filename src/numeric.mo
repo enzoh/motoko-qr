@@ -6,14 +6,14 @@
  * Stability  : Experimental
  */
 
-import Common "../src/common.mo";
-import Extra "../src/extra.mo";
-import List "mo:stdlib/list.mo";
-import Nat "../src/nat.mo";
-import Option "mo:stdlib/option.mo";
-import Prelude "mo:stdlib/prelude.mo";
+import Common "../src/common";
+import Extra "../src/extra";
+import List "mo:stdlib/list";
+import Nat "../src/nat";
+import Option "mo:stdlib/option";
+import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
-import Util "../src/util.mo";
+import Util "../src/util";
 
 module {
 
