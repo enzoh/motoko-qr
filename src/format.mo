@@ -6,11 +6,11 @@
  * Stability  : Stable
  */
 
-import Common "../src/common";
-import Galois "../src/galois";
+import Common "common";
+import Galois "galois";
 import List "mo:stdlib/list";
-import Nat "../src/nat";
-import Util "../src/util";
+import Nat "nat";
+import Util "util";
 
 module {
 

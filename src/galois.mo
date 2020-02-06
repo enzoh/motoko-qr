@@ -8,7 +8,7 @@
 
 import Array "mo:stdlib/array";
 import List "mo:stdlib/list";
-import Nat "../src/nat";
+import Nat "nat";
 import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
 

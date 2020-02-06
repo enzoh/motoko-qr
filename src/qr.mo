@@ -6,10 +6,10 @@
  * Stability  : Stable
  */
 
-import Common "../src/common";
-import Generic "../src/generic";
+import Common "common";
+import Generic "generic";
 import List "mo:stdlib/list";
-import Numeric "../src/numeric";
+import Numeric "numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
 
@@ -31,7 +31,10 @@ module {
     mode : Mode,
     text : Text
   ) : ?Matrix {
-    Option.bind<List<Bool>, Matrix>(
+    Option.map<List<Bool>, Matrix>(
+      func (data) {
+        Generic.genericEncode(version, level, data)
+      },
       switch mode {
         case (#Alphanumeric) {
           Prelude.printLn("Error: Alphanumeric mode is not yet implemented!");
@@ -48,9 +51,6 @@ module {
         case (#Numeric) {
           Numeric.numericEncode(version, text)
         };
-      },
-      func (data) {
-        Generic.genericEncode(version, level, data)
       }
     )
   };

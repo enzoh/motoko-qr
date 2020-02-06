@@ -1,12 +1,12 @@
 /**
- * Module      : generic.mo
- * Copyright   : 2020 DFINITY Stiftung
- * License     : Apache 2.0
- * Maintainer  : Enzo Haussecker <enzo@dfinity.org>
- * Stability   : Experimental
+ * Module     : generic.mo
+ * Copyright  : 2020 DFINITY Stiftung
+ * License    : Apache 2.0
+ * Maintainer : Enzo Haussecker <enzo@dfinity.org>
+ * Stability  : Experimental
  */
 
-import Common "../src/common";
+import Common "common";
 import List "mo:stdlib/list";
 import Prelude "mo:stdlib/prelude";
 
@@ -18,7 +18,7 @@ module {
     version : Common.Version,
     level : Common.ErrorCorrection,
     data : List<Bool>
-  ) : ?Common.Matrix {
+  ) : Common.Matrix {
     Prelude.printLn("Error: Generic encoder is not yet implemented!");
     Prelude.unreachable()
   };

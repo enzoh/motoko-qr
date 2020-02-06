@@ -7,14 +7,14 @@
  */
 
 import Char "mo:stdlib/char";
-import Common "../src/common";
+import Common "common";
 import Iter "mo:stdlib/iter";
 import List "mo:stdlib/list";
-import Nat "../src/nat";
+import Nat "nat";
 import Option "mo:stdlib/option";
 import Prim "mo:prim";
 import Text "mo:stdlib/text";
-import Util "../src/util";
+import Util "util";
 
 module {
 
