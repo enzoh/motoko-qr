@@ -6,13 +6,14 @@
  * Stability  : Experimental
  */
 
+import Char "mo:stdlib/char";
 import Common "../src/common";
-import Extra "../src/extra";
+import Iter "mo:stdlib/iter";
 import List "mo:stdlib/list";
 import Nat "../src/nat";
 import Option "mo:stdlib/option";
-import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
+import Text "mo:stdlib/text";
 import Util "../src/util";
 
 module {
@@ -38,7 +39,7 @@ module {
     };
 
     // 
-    let chunks = List.chunksOf<Char>(3, Extra.textToList(text));
+    let chunks = List.chunksOf<Char>(3, Iter.toList<Char>(Text.toIter(text)));
 
     // 
     func step(chunk : List<Char>, accum : ?List<Bool>) : ?List<Bool> {
@@ -68,7 +69,7 @@ module {
 
     //
     let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (char, accum) {
-      if (Extra.isDigit(char)) {
+      if (Char.isDigit(char)) {
         Option.map<Nat, Nat>(func (a) {
           let b = Prim.word32ToNat(
             Prim.charToWord32(char) - Prim.charToWord32('0')
