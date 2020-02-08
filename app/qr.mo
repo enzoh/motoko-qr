@@ -27,12 +27,12 @@ actor {
 
   public type Matrix = Common.Matrix;
 
-  func encode(
+  public func encode(
     version : Version,
     level : ErrorCorrection,
     mode : Mode,
     text : Text
-  ) : ?Matrix {
+  ) : async ?Matrix {
     Option.map<List<Bool>, Matrix>(
       func (data) {
         Generic.encode(version, level, data)
@@ -52,7 +52,7 @@ actor {
     )
   };
 
-  func show(matrix : Matrix) : Text {
+  public func show(matrix : Matrix) : async Text {
     var accum = "";
     for (row in matrix.unbox.vals()) {
       for (val in row.vals()) {
@@ -67,16 +67,8 @@ actor {
     accum
   };
 
-  func version(n : Nat) : Version {
+  public func version(n : Nat) : async Version {
     Version.new(n)
-  };
-
-  public func demo() : async Text {
-    let result = encode(version(1), #Q, #Alphanumeric, "HELLO WORLD");
-    switch result {
-      case (?matrix) show(matrix);
-      case _ "Error: Invalid input!"
-    }
   };
 
 }
