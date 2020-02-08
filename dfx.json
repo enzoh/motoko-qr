@@ -1,5 +1,8 @@
 {
     "canisters": {
+        "demo": {
+            "main": "app/demo.mo"
+        },
         "format": {
             "main": "test/format.mo"
         },
@@ -7,7 +10,7 @@
             "main": "test/galois.mo"
         },
         "qr": {
-            "main": "app/main.mo"
+            "main": "app/qr.mo"
         },
         "version": {
             "main": "test/version.mo"

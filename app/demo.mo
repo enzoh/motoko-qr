@@ -7,33 +7,29 @@
  */
 
 import Prelude "mo:stdlib/prelude";
-import QR "../src/qr";
+import QR "canister:qr";
 
 actor {
 
   public func example1() : async Text {
-    let result = QR.encode(QR.version(1), #M, #Numeric, "01234567");
+    let version = await QR.version(1);
+    let result = await QR.encode(version, #M, #Numeric, "01234567");
     switch result {
       case (?matrix) {
-        QR.show(matrix)
+        await QR.show(matrix);
       };
-      case _ {
-        Prelude.printLn("Error: Invalid input!");
-        Prelude.unreachable()
-      }
+      case _ "Error: Invalid input!";
     }
   };
 
   public func example2() : async Text {
-    let result = QR.encode(QR.version(1), #Q, #Alphanumeric, "HELLO WORLD");
+    let version = await QR.version(1);
+    let result = await QR.encode(version, #Q, #Alphanumeric, "HELLO WORLD");
     switch result {
       case (?matrix) {
-        QR.show(matrix)
+        await QR.show(matrix);
       };
-      case _ {
-        Prelude.printLn("Error: Invalid input!");
-        Prelude.unreachable()
-      }
+      case _ "Error: Invalid input!";
     }
   };
 

@@ -6,16 +6,16 @@
  * Stability  : Stable
  */
 
-import Alphanumeric "alphanumeric";
-import Common "common";
-import Generic "generic";
+import Alphanumeric "../src/alphanumeric";
+import Common "../src/common";
+import Generic "../src/generic";
 import List "mo:stdlib/list";
-import Numeric "numeric";
+import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
-import Version "version";
+import Version "../src/version";
 
-module {
+actor {
 
   type List<T> = List.List<T>;
 
@@ -32,7 +32,7 @@ module {
     level : ErrorCorrection,
     mode : Mode,
     text : Text
-  ) : ?Matrix {
+  ) : async ?Matrix {
     Option.map<List<Bool>, Matrix>(
       func (data) {
         Generic.encode(version, level, data)
@@ -52,7 +52,7 @@ module {
     )
   };
 
-  public func show(matrix : Matrix) : Text {
+  public func show(matrix : Matrix) : async Text {
     var accum = "";
     for (row in matrix.unbox.vals()) {
       for (val in row.vals()) {
@@ -67,6 +67,8 @@ module {
     accum
   };
 
-  public let version = Version.new;
+  public func version(n : Nat) : async Version {
+    Version.new(n)
+  };
 
 }
