@@ -14,12 +14,10 @@ import Util "util";
 
 module {
 
+  type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
 
-  public func encode(
-    level : Common.ErrorCorrection,
-    mask : List<Bool>
-  ) : List<Bool> {
+  public func encode(level : ErrorCorrection, mask : List<Bool>) : List<Bool> {
     let input = List.append<Bool>(Common.getECIBits(level), mask);
     let poly1 = Galois.polyFromBits(Util.bitPadRight(10, input));
     let poly2 = Galois.polyFromBits(Nat.natToBits(1335));

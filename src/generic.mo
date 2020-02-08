@@ -15,14 +15,16 @@ import Version "version";
 
 module {
 
+  type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
+  type Matrix = Common.Matrix;
   type Version = Version.Version;
 
   public func encode(
     version : Version,
-    level : Common.ErrorCorrection,
+    level : ErrorCorrection,
     data : List<Bool>
-  ) : Common.Matrix {
+  ) : Matrix {
     //Prelude.printLn(List.foldLeft<Bool, Text>(data, "", func (test, accum) { accum # (if test "1" else "0") }));
     Prelude.printLn(List.foldLeft<Bool, Text>(Block.appendPadCodewords(version, level, data), "", func (test, accum) { accum # (if test "1" else "0") }));
     //let _ = Block.genPadCodewords(version, level, data);

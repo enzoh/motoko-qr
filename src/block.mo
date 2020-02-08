@@ -14,12 +14,13 @@ import Version "version";
 
 module {
 
+  type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
   type Version = Version.Version;
 
   public func interleave(
     version : Version,
-    level : Common.ErrorCorrection,
+    level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
     let info = Common.info(version);
@@ -28,7 +29,7 @@ module {
 
   public func appendPadCodewords(
     version : Version,
-    level : Common.ErrorCorrection,
+    level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
     let targetLen = Common.targetDataLen(version, level);
