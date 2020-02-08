@@ -20,25 +20,22 @@ module {
 
   type List<T> = List.List<T>;
 
-  public func numericEncode(
+  // Encode the given input text using the numeric encoding routine.
+  public func encode(
     version : Common.Version,
     text : Text
   ) : ?List<Bool> {
 
-    // Define mode and character count indicators.
     let mi = List.fromArray<Bool>([false, false, false, true]);
     let cci = Util.bitPadLeftTo(
       Common.cciLen(version, #Numeric),
       Nat.natToBits(text.len())
     );
 
-    // Define metadata and terminator.
     let header = List.append<Bool>(mi, cci);
     let footer = List.replicate<Bool>(4, false);
-
-    // 
-    func render(bits : List<Bool>) : List<Bool> {
-      List.append<Bool>(header, List.append<Bool>(bits, footer))
+    func render(body : List<Bool>) : List<Bool> {
+      List.append<Bool>(header, List.append<Bool>(body, footer))
     };
 
     // 

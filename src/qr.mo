@@ -34,12 +34,10 @@ module {
   ) : ?Matrix {
     Option.map<List<Bool>, Matrix>(
       func (data) {
-        Generic.genericEncode(version, level, data)
+        Generic.encode(version, level, data)
       },
       switch mode {
-        case (#Alphanumeric) {
-          Alphanumeric.encode(version, text)
-        };
+        case (#Alphanumeric) Alphanumeric.encode(version, text);
         case (#EightBit) {
           Prelude.printLn("Error: 8-bit mode is not yet implemented!");
           Prelude.unreachable()
@@ -48,9 +46,7 @@ module {
           Prelude.printLn("Error: Kanji mode is not yet implemented!");
           Prelude.unreachable()
         };
-        case (#Numeric) {
-          Numeric.numericEncode(version, text)
-        };
+        case (#Numeric) Numeric.encode(version, text);
       }
     )
   };

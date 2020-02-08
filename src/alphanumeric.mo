@@ -3,7 +3,7 @@
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : Experimental
+ * Stability  : stable
  */
 
 import Array "mo:stdlib/array";
@@ -23,26 +23,24 @@ module {
   type List<T> = List.List<T>;
   type Trie<K, V> = Trie.Trie<K, V>;
 
+  // Encode the given input text using the alphanumeric encoding routine.
   public func encode(
     version : Common.Version,
     text : Text
   ) : ?List<Bool> {
 
-    // Define mode and character count indicators.
     let mi = List.fromArray<Bool>([false, false, true, false]);
     let cci = Util.bitPadLeftTo(
       Common.cciLen(version, #Alphanumeric),
       Nat.natToBits(text.len())
     );
 
-    // Define function to render output.
     let header = List.append<Bool>(mi, cci);
     let footer = List.replicate<Bool>(4, false);
     func render(body : List<Bool>) : List<Bool> {
       List.append<Bool>(header, List.append<Bool>(body, footer))
     };
 
-    // Transliterate input text.
     let table = genTable();
     let transliteration = List.foldRight<Char, ?List<Nat>>(
       Iter.toList<Char>(Text.toIter(text)),
@@ -62,7 +60,6 @@ module {
       }
     );
 
-    //
     Option.map<List<Bool>, List<Bool>>(
       render,
       Option.map<List<Nat>, List<Bool>>(
@@ -71,10 +68,7 @@ module {
             List.chunksOf<Nat>(2, values),
             List.nil<Bool>(),
             func (chunk, accum) {
-              List.append<Bool>(
-                Option.unwrap<List<Bool>>(parseChunk(chunk)),
-                accum
-              )
+              List.append<Bool>(encodeChunkOrTrap(chunk), accum)
             }
           )
         },
@@ -107,23 +101,22 @@ module {
     ).0
   };
 
-  func eqChar(a : Char, b : Char) : Bool {
-    a == b
-  };
-
   func keyChar(char : Char) : Trie.Key<Char> {
     { key = char; hash = Prim.charToWord32(char) };
   };
 
-  func parseChunk(chunk : List<Nat>) : ?List<Bool> {
+  func eqChar(a : Char, b : Char) : Bool {
+    a == b
+  };
+
+  func encodeChunkOrTrap(chunk : List<Nat>) : List<Bool> {
     switch chunk {
-      case (?(x, null)) {
-        ?Util.bitPadLeftTo(6, Nat.natToBits(x))
-      };
-      case (?(x, ?(y, null))) {
-        ?Util.bitPadLeftTo(11, Nat.natToBits(x * 45 + y))
-      };
-      case _ null
+      case (?(x, null)) Util.bitPadLeftTo(6, Nat.natToBits(x));
+      case (?(x, ?(y, null))) Util.bitPadLeftTo(11, Nat.natToBits(x * 45 + y));
+      case _ {
+        Prelude.printLn("Error: Invalid chunk size!");
+        Prelude.unreachable();
+      }
     }
   };
 

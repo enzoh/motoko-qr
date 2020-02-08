@@ -16,7 +16,7 @@ module {
 
   type List<T> = List.List<T>;
 
-  public func genericEncode(
+  public func encode(
     version : Common.Version,
     level : Common.ErrorCorrection,
     data : List<Bool>
