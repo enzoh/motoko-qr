@@ -26,8 +26,11 @@ module {
   ) : ?List<Bool> {
 
     // Define mode and character count indicators.
-    let mi = Util.bitPadLeft(3, List.singleton<Bool>(true));
-    let cci = Util.bitPadLeftTo(Common.cciLen(version, #Numeric), Nat.natToBits(text.len()));
+    let mi = List.fromArray<Bool>([false, false, false, true]);
+    let cci = Util.bitPadLeftTo(
+      Common.cciLen(version, #Numeric),
+      Nat.natToBits(text.len())
+    );
 
     // Define metadata and terminator.
     let header = List.append<Bool>(mi, cci);
