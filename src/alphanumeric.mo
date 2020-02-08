@@ -17,17 +17,16 @@ import Prim "mo:prim";
 import Text "mo:stdlib/text";
 import Trie "mo:stdlib/trie";
 import Util "util";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
   type Trie<K, V> = Trie.Trie<K, V>;
+  type Version = Version.Version;
 
   // Encode the given input text using the alphanumeric encoding routine.
-  public func encode(
-    version : Common.Version,
-    text : Text
-  ) : ?List<Bool> {
+  public func encode(version : Version, text : Text) : ?List<Bool> {
 
     let mi = List.fromArray<Bool>([false, false, true, false]);
     let cci = Util.bitPadLeftTo(

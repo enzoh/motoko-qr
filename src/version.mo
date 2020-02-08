@@ -6,17 +6,27 @@
  * Stability  : Stable
  */
 
-import Common "common";
 import Galois "galois";
 import List "mo:stdlib/list";
 import Nat "nat";
+import Prelude "mo:stdlib/prelude";
 import Util "util";
 
 module {
 
   type List<T> = List.List<T>;
 
-  public func encode(version : Common.Version) : List<Bool> {
+  public type Version = { unbox : Nat };
+
+  public func new(n : Nat) : Version {
+    if (n > 40 or n == 0) {
+      Prelude.printLn("Error: Invalid version!");
+      Prelude.unreachable()
+    };
+    { unbox = n }
+  };
+
+  public func encode(version : Version) : List<Bool> {
     let input = Nat.natToBits(version.unbox);
     let poly1 = Galois.polyFromBits(Util.bitPadRight(12, input));
     let poly2 = Galois.polyFromBits(Nat.natToBits(7973));

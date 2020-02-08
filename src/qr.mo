@@ -13,12 +13,13 @@ import List "mo:stdlib/list";
 import Numeric "numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
 
-  public type Version = Common.Version;
+  public type Version = Version.Version;
 
   public type ErrorCorrection = Common.ErrorCorrection;
 
@@ -66,6 +67,6 @@ module {
     accum
   };
 
-  public let version = Common.versionNew;
+  public let version = Version.new;
 
 }

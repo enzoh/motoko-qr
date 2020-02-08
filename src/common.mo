@@ -8,10 +8,12 @@
 
 import List "mo:stdlib/list";
 import Prelude "mo:stdlib/prelude";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
+  type Version = Version.Version;
 
   public type ErrorCorrection = { #L; #M; #Q; #H };
 
@@ -20,8 +22,6 @@ module {
   public type Matrix = { unbox : [[Bool]] };
 
   public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
-
-  public type Version = { unbox : Nat };
 
   public func info(version : Version) : Info {
     [
@@ -179,14 +179,6 @@ module {
       [118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,118,119,119,119,119,119,119], [47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,47,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48,48], [24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25], [15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]
     ];
     match<[Nat]>(version, level, table)
-  };
-
-  public func versionNew(n : Nat) : Version {
-    if (n > 40 or n == 0) {
-      Prelude.printLn("Error: Invalid version!");
-      Prelude.unreachable()
-    };
-    { unbox = n }
   };
 
   public func getECIBits(level : ErrorCorrection) : List<Bool> {

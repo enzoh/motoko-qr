@@ -10,13 +10,15 @@ import Common "common";
 import List "mo:stdlib/list";
 import Nat "nat";
 import Prelude "mo:stdlib/prelude";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
+  type Version = Version.Version;
 
   public func interleave(
-    version : Common.Version,
+    version : Version,
     level : Common.ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
@@ -25,7 +27,7 @@ module {
   };
 
   public func appendPadCodewords(
-    version : Common.Version,
+    version : Version,
     level : Common.ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {

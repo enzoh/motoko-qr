@@ -15,16 +15,15 @@ import Option "mo:stdlib/option";
 import Prim "mo:prim";
 import Text "mo:stdlib/text";
 import Util "util";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
+  type Version = Version.Version;
 
   // Encode the given input text using the numeric encoding routine.
-  public func encode(
-    version : Common.Version,
-    text : Text
-  ) : ?List<Bool> {
+  public func encode(version : Version, text : Text) : ?List<Bool> {
 
     let mi = List.fromArray<Bool>([false, false, false, true]);
     let cci = Util.bitPadLeftTo(

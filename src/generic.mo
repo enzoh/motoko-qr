@@ -11,13 +11,15 @@ import Common "common";
 import List "mo:stdlib/list";
 import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
+import Version "version";
 
 module {
 
   type List<T> = List.List<T>;
+  type Version = Version.Version;
 
   public func encode(
-    version : Common.Version,
+    version : Version,
     level : Common.ErrorCorrection,
     data : List<Bool>
   ) : Common.Matrix {
