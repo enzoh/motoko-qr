@@ -6,6 +6,7 @@
  * Stability  : Stable
  */
 
+import Alphanumeric "alphanumeric";
 import Common "common";
 import Generic "generic";
 import List "mo:stdlib/list";
@@ -37,8 +38,7 @@ module {
       },
       switch mode {
         case (#Alphanumeric) {
-          Prelude.printLn("Error: Alphanumeric mode is not yet implemented!");
-          Prelude.unreachable()
+          Alphanumeric.encode(version, text)
         };
         case (#EightBit) {
           Prelude.printLn("Error: 8-bit mode is not yet implemented!");
