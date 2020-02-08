@@ -16,7 +16,7 @@ module {
 
   type List<T> = List.List<T>;
 
-  public func formatEncode(
+  public func encode(
     level : Common.ErrorCorrection,
     mask : List<Bool>
   ) : List<Bool> {
