@@ -15,10 +15,8 @@ actor {
     let version = await QR.version(1);
     let result = await QR.encode(version, #M, #Numeric, "01234567");
     switch result {
-      case (?matrix) {
-        await QR.show(matrix);
-      };
-      case _ "Error: Invalid input!";
+      case (?matrix) await QR.show(matrix);
+      case _ "Error: Invalid input!"
     }
   };
 
@@ -26,10 +24,8 @@ actor {
     let version = await QR.version(1);
     let result = await QR.encode(version, #Q, #Alphanumeric, "HELLO WORLD");
     switch result {
-      case (?matrix) {
-        await QR.show(matrix);
-      };
-      case _ "Error: Invalid input!";
+      case (?matrix) await QR.show(matrix);
+      case _ "Error: Invalid input!"
     }
   };
 
