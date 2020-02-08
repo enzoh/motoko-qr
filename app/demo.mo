@@ -1,9 +1,9 @@
 /**
- * Module     : main.mo
+ * Module     : demo.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : Stable
+ * Stability  : Experimental
  */
 
 import Prelude "mo:stdlib/prelude";
