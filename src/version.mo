@@ -17,7 +17,7 @@ module {
 
   type List<T> = List.List<T>;
 
-  public func versionEncode(version : Common.Version) : List<Bool> {
+  public func encode(version : Common.Version) : List<Bool> {
     let input = Nat.natToBits(version.unbox);
     let poly1 = Galois.polyFromBits(Util.bitPadRight(12, input));
     let poly2 = Galois.polyFromBits(Nat.natToBits(7973));

@@ -14,7 +14,7 @@ import Version "../src/version";
 actor {
 
   func runAnnexDTest() {
-    let bits = Version.versionEncode(Common.versionNew(7));
+    let bits = Version.encode(Common.versionNew(7));
     let n = List.len<Bool>(bits);
     assert (Nat.natFromBits(bits) == 31892);
     assert (n == 18)
