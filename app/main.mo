@@ -12,10 +12,10 @@ import QR "../src/qr";
 actor {
 
   public func example1() : async Text {
-    let result = QR.qrEncode(QR.qrVersion(1), #M, #Numeric, "01234567");
+    let result = QR.encode(QR.version(1), #M, #Numeric, "01234567");
     switch result {
       case (?matrix) {
-        QR.qrShow(matrix)
+        QR.show(matrix)
       };
       case _ {
         Prelude.printLn("Error: Invalid input!");
@@ -25,10 +25,10 @@ actor {
   };
 
   public func example2() : async Text {
-    let result = QR.qrEncode(QR.qrVersion(1), #Q, #Alphanumeric, "HELLO WORLD");
+    let result = QR.encode(QR.version(1), #Q, #Alphanumeric, "HELLO WORLD");
     switch result {
       case (?matrix) {
-        QR.qrShow(matrix)
+        QR.show(matrix)
       };
       case _ {
         Prelude.printLn("Error: Invalid input!");

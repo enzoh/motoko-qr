@@ -26,7 +26,7 @@ module {
 
   public type Matrix = Common.Matrix;
 
-  public func qrEncode(
+  public func encode(
     version : Version,
     level : ErrorCorrection,
     mode : Mode,
@@ -55,7 +55,7 @@ module {
     )
   };
 
-  public func qrShow(matrix : Matrix) : Text {
+  public func show(matrix : Matrix) : Text {
     var accum = "";
     for (row in matrix.unbox.vals()) {
       for (val in row.vals()) {
@@ -70,6 +70,6 @@ module {
     accum
   };
 
-  public let qrVersion = Common.versionNew;
+  public let version = Common.versionNew;
 
 }
