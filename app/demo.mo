@@ -29,4 +29,13 @@ actor {
     }
   };
 
+  public func example3() : async Text {
+    let version = await QR.version(2);
+    let result = await QR.encode(version, #M, #Alphanumeric, "HTTP://SDK.DFINITY.ORG");
+    switch result {
+      case (?matrix) await QR.show(matrix);
+      case _ "Error: Invalid input!"
+    }
+  };
+
 }
