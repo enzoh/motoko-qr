@@ -15,6 +15,8 @@ module {
   type List<T> = List.List<T>;
   type Version = Version.Version;
 
+  public type Bits = List<Bool>;
+
   public type ErrorCorrection = { #L; #M; #Q; #H };
 
   public type Info = { capacity : Nat; remainder : Nat; width : Nat };

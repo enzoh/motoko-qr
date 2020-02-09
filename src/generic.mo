@@ -26,8 +26,8 @@ module {
     data : List<Bool>
   ) : Matrix {
     //Prelude.printLn(List.foldLeft<Bool, Text>(data, "", func (test, accum) { accum # (if test "1" else "0") }));
-    Prelude.printLn(List.foldLeft<List<List<Bool>>, Text>(Block.toBlocks(version, level, data), "", func (block, accum1) {
-      let foobar = List.foldLeft<Bool, Text>(List.concat<Bool>(block), "", func (test, accum2) { accum2 # (if test "1" else "0") });
+    Prelude.printLn(List.foldLeft<List<Bool>, Text>(Block.toBlocks(version, level, data), "", func (block, accum1) {
+      let foobar = List.foldLeft<Bool, Text>(block, "", func (test, accum2) { accum2 # (if test "1" else "0") });
       accum1 # foobar # "\n"
     }));
     //let _ = Block.genPadCodewords(version, level, data);

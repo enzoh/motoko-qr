@@ -33,27 +33,25 @@ module {
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
-  ) : List.List<List.List<List.List<Bool>>> {
-
+  ) : List<List.List<Bool>> {
     func go(
-      accum : List<List<List<Bool>>>,
+      accum : List<List<Bool>>,
       chunks : List<List<Bool>>,
       sizes : List<Nat>
-    ) : List<List<List<Bool>>> {
+    ) : List<List<Bool>> {
       switch sizes {
-        case (null) List.rev<List<List<Bool>>>(accum);
+        case (null) List.rev<List<Bool>>(accum);
         case (?(h, t)) {
-          let (a, b) : (List<List<Bool>>, List<List<Bool>>) = List.splitAt<List<Bool>>(h, chunks);
-          go(List.push<List<List<Bool>>>(a, accum), b, t)
+          let (a, b) = List.splitAt<List<Bool>>(h, chunks);
+          go(List.push<List<Bool>>(List.concat<Bool>(a), accum), b, t)
         }
       }
     };
-
-    let accum2 : List<List<List<Bool>>> = List.nil<List<List<Bool>>>();
-    let chunks2 : List<List<Bool>> = List.chunksOf<Bool>(8, toTargetLen(version, level, data));
-    let sizes2 : List<Nat> = List.fromArray<Nat>(Common.qrDCWSizes(version, level));
-
-    go(accum2, chunks2, sizes2);
+    go(
+      List.nil<List<Bool>>(),
+      List.chunksOf<Bool>(8, toTargetLen(version, level, data)),
+      List.fromArray<Nat>(Common.qrDCWSizes(version, level))
+    );
   };
 
   // Pad or truncate the input data to its target length.
