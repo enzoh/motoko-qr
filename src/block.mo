@@ -24,36 +24,34 @@ module {
     data : List<Bool>
   ) : List<Bool> {
     let info = Common.info(version);
+    // TODO: Implement this function!
     Prelude.unreachable()
   };
 
-  public func appendPadCodewords(
+  // Pad or truncate the input data to its target length.
+  public func toTargetLen(
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
-    let targetLen = Common.targetDataLen(version, level);
-    // Calculate base bits.
+    let targetLen = Common.targetLen(version, level);
     let baseBuf = List.take<Bool>(data, targetLen);
     let baseBufLen = List.len<Bool>(baseBuf);
-    // Calculate pad bits.
-    let padBufLen =
+    let zeroPadLen =
       if (baseBufLen + 7 > targetLen) {
         targetLen - baseBufLen
       } else {
         8 - baseBufLen % 8
       };
-    let padBuf = List.replicate<Bool>(padBufLen, false);
-    // Calculate fill bits.
-    var fillBufLen = targetLen - baseBufLen - padBufLen;
-    var fillBuf = List.nil<Bool>();
-    while (fillBufLen > 0) {
-      let chunk = List.take<Bool>(Nat.natToBits(60433), fillBufLen);
-      fillBufLen -= List.len<Bool>(chunk);
-      fillBuf := List.append<Bool>(fillBuf, chunk);
+    let zeroPad = List.replicate<Bool>(zeroPadLen, false);
+    var fillPadLen = targetLen - baseBufLen - zeroPadLen;
+    var fillPad = List.nil<Bool>();
+    while (fillPadLen > 0) {
+      let chunk = List.take<Bool>(Nat.natToBits(60433), fillPadLen);
+      fillPadLen -= List.len<Bool>(chunk);
+      fillPad := List.append<Bool>(fillPad, chunk);
     };
-    // Concatenate results from above.
-    List.append<Bool>(baseBuf, List.append<Bool>(padBuf, fillBuf))
+    List.append<Bool>(baseBuf, List.append<Bool>(zeroPad, fillPad))
   };
 
 }

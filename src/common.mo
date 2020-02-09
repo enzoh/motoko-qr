@@ -83,10 +83,7 @@ module {
     table[4 * i + j]
   };
 
-  public func targetDataLen(
-    version : Version,
-    level : ErrorCorrection
-  ) : Nat {
+  public func targetLen(version : Version, level : ErrorCorrection) : Nat {
     let table = [
       00152, 00128, 00104, 00072,
       00272, 00224, 00176, 00128,
@@ -132,10 +129,7 @@ module {
     match<Nat>(version, level, table)
   };
 
-  public func qrDCWSizes(
-    version : Version,
-    level : ErrorCorrection
-  ) : [Nat] {
+  public func qrDCWSizes(version : Version, level : ErrorCorrection) : [Nat] {
     let table = [
       [19], [16], [13], [9],
       [34], [28], [22], [16],
