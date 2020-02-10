@@ -109,10 +109,10 @@ module {
   ) : List<Bool> {
     let chunksIn = List.chunksOf<Bool>(8, data);
     let elemsIn = List.map<List<Bool>, Elem>(chunksIn, Galois.elemFromBits);
-    let correctionSize = Common.correctionSize(version, level);
-    let correctionPoly = Common.correctionPoly(version, level);
-    let dataPoly = Galois.polyPadRight(correctionSize, { unbox = elemsIn });
-    let resultPoly = Galois.polyDivMod(dataPoly, correctionPoly).1;
+    let errorSize = Common.errorSize(version, level);
+    let errorPoly = Common.errorPoly(version, level);
+    let dataPoly = Galois.polyPadRight(errorSize, { unbox = elemsIn });
+    let resultPoly = Galois.polyDivMod(dataPoly, errorPoly).1;
     let elemsOut = Galois.polyTrim(resultPoly).unbox;
     let chunksOut = List.map<Elem, List<Bool>>(elemsOut, Galois.elemToBits);
     List.concat<Bool>(chunksOut)

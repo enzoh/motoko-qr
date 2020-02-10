@@ -178,7 +178,7 @@ module {
     match<[Nat]>(version, level, table)
   };
 
-  public func correctionSize(version : Version, level : ErrorCorrection) : Nat {
+  public func errorSize(version : Version, level : ErrorCorrection) : Nat {
     let table = [
       07, 10, 13, 17,
       10, 16, 22, 28,
@@ -224,8 +224,8 @@ module {
     match<Nat>(version, level, table)
   };
 
-  public func correctionPoly(version : Version, level : ErrorCorrection) : Poly {
-    let size = correctionSize(version, level);
+  public func errorPoly(version : Version, level : ErrorCorrection) : Poly {
+    let size = errorSize(version, level);
     let logs = switch size {
       case 07 [0,87,229,146,149,238,102,21];
       case 10 [0,251,67,46,61,118,70,64,94,32,45];
