@@ -25,7 +25,7 @@ module {
   type Trie<K, V> = Trie.Trie<K, V>;
   type Version = Version.Version;
 
-  // Encode the given input text using the alphanumeric encoding routine.
+  // Encode the input text using the alphanumeric encoding routine.
   public func encode(version : Version, text : Text) : ?List<Bool> {
 
     let mi = List.fromArray<Bool>([false, false, true, false]);

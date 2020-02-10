@@ -24,6 +24,9 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
+
+    // Calculate the codewords for each data block, as well as the
+    // corresponding error correction codewords.
     let (blockCodewords, correctionCodewords) =
       List.foldRight<List<Bool>, (List<Codewords>, List<Codewords>)>(
         toBlocks(version, level, data),
@@ -34,6 +37,7 @@ module {
           (List.push<Codewords>(a, accum.0), List.push<Codewords>(b, accum.1))
         }
       );
+
     List.concat<Bool>(List.fromArray<List<Bool>>([
       flatten(blockCodewords),
       flatten(correctionCodewords),
@@ -46,6 +50,7 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<List<Bool>> {
+
     func go(
       accum : List<List<Bool>>,
       chunks : List<List<Bool>>,
@@ -59,6 +64,7 @@ module {
         }
       }
     };
+
     go(
       List.nil<List<Bool>>(),
       List.chunksOf<Bool>(8, toTarget(version, level, data)),
@@ -71,9 +77,11 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
+
     let targetSize = Common.targetSize(version, level);
     let baseBuf = List.take<Bool>(data, targetSize);
     let baseBufSize = List.len<Bool>(baseBuf);
+
     let zeroPadSize =
       if (baseBufSize + 7 > targetSize) {
         targetSize - baseBufSize
@@ -81,6 +89,7 @@ module {
         8 - baseBufSize % 8
       };
     let zeroPad = List.replicate<Bool>(zeroPadSize, false);
+
     var fillPadSize = targetSize - baseBufSize - zeroPadSize;
     var fillPad = List.nil<Bool>();
     while (fillPadSize > 0) {
@@ -88,6 +97,7 @@ module {
       fillPadSize -= List.len<Bool>(chunk);
       fillPad := List.append<Bool>(fillPad, chunk);
     };
+
     List.append<Bool>(baseBuf, List.append<Bool>(zeroPad, fillPad))
   };
 
@@ -96,13 +106,11 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
-    let dataPoly = Galois.polyPadRight(
-      Common.correctionSize(version, level),
-      Galois.polyFromBits(data)
-    );
-    let correctionPoly = Common.correctionPoly(version, level);
-    let remainderPoly = Galois.polyDivMod(dataPoly, correctionPoly).1;
-    Galois.polyToBits(Galois.polyTrim(remainderPoly))
+    let correctionSize = Common.correctionSize(version, level);
+    Galois.polyToBits(Galois.polyTrim(Galois.polyDivMod(
+      Galois.polyPadRight(correctionSize, Galois.polyFromBits(data)),
+      Common.correctionPoly(version, level)
+    ).1))
   };
 
   func flatten(data : List<Codewords>) : List<Bool> {
