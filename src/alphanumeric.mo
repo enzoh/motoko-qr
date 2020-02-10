@@ -3,7 +3,7 @@
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : stable
+ * Stability  : Stable
  */
 
 import Array "mo:stdlib/array";
@@ -28,18 +28,21 @@ module {
   // Encode the input text using the alphanumeric encoding routine.
   public func encode(version : Version, text : Text) : ?List<Bool> {
 
+    // Define the mode and character count indicators.
     let mi = List.fromArray<Bool>([false, false, true, false]);
     let cci = Util.bitPadLeftTo(
       Common.cciLen(version, #Alphanumeric),
       Nat.natToBits(text.len())
     );
 
-    let header = List.append<Bool>(mi, cci);
-    let footer = List.replicate<Bool>(4, false);
-    func render(body : List<Bool>) : List<Bool> {
+    // Define a function to format the output encodings.
+    func format(body : List<Bool>) : List<Bool> {
+      let header = List.append<Bool>(mi, cci);
+      let footer = List.replicate<Bool>(4, false);
       List.append<Bool>(header, List.append<Bool>(body, footer))
     };
 
+    // Transliterate the input text.
     let table = genTable();
     let transliteration = List.foldRight<Char, ?List<Nat>>(
       Iter.toList<Char>(Text.toIter(text)),
@@ -59,8 +62,9 @@ module {
       }
     );
 
+    // Render the output encodings. 
     Option.map<List<Bool>, List<Bool>>(
-      render,
+      format,
       Option.map<List<Nat>, List<Bool>>(
         func (values) {
           List.foldRight<List<Nat>, List<Bool>>(
