@@ -179,12 +179,11 @@ module {
   };
 
   public func polyToBits(poly : Poly) : List<Bool> {
-    List.concat<Bool>(List.map<Elem, List<Bool>>(poly.unbox, elemToBits))
+    List.map<Elem, Bool>(poly.unbox, elemToBit)
   };
 
   public func polyFromBits(bits : List<Bool>) : Poly {
-    let chunks = List.chunksOf<Bool>(8, bits);
-    { unbox = List.map<List<Bool>, Elem>(chunks, elemFromBits) }
+    { unbox = List.map<Bool, Elem>(bits, elemFromBit) }
   };
 
   public func polyLen(poly : Poly) : Nat {

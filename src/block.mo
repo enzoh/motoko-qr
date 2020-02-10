@@ -15,6 +15,7 @@ import Version "version";
 module {
 
   type Codewords = List<List<Bool>>;
+  type Elem = Galois.Elem;
   type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
   type Version = Version.Version;
@@ -106,11 +107,15 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
+    let chunksIn = List.chunksOf<Bool>(8, data);
+    let elemsIn = List.map<List<Bool>, Elem>(chunksIn, Galois.elemFromBits);
     let correctionSize = Common.correctionSize(version, level);
-    Galois.polyToBits(Galois.polyTrim(Galois.polyDivMod(
-      Galois.polyPadRight(correctionSize, Galois.polyFromBits(data)),
-      Common.correctionPoly(version, level)
-    ).1))
+    let correctionPoly = Common.correctionPoly(version, level);
+    let dataPoly = Galois.polyPadRight(correctionSize, { unbox = elemsIn });
+    let resultPoly = Galois.polyDivMod(dataPoly, correctionPoly).1;
+    let elemsOut = Galois.polyTrim(resultPoly).unbox;
+    let chunksOut = List.map<Elem, List<Bool>>(elemsOut, Galois.elemToBits);
+    List.concat<Bool>(chunksOut)
   };
 
   func flatten(data : List<Codewords>) : List<Bool> {
