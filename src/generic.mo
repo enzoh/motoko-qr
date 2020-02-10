@@ -8,6 +8,7 @@
 
 import Block "block";
 import Common "common";
+import Galois "galois";
 import List "mo:stdlib/list";
 import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
@@ -25,12 +26,7 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : Matrix {
-    //Prelude.printLn(List.foldLeft<Bool, Text>(data, "", func (test, accum) { accum # (if test "1" else "0") }));
-    Prelude.printLn(List.foldLeft<List<Bool>, Text>(Block.toBlocks(version, level, data), "", func (block, accum1) {
-      let foobar = List.foldLeft<Bool, Text>(block, "", func (test, accum2) { accum2 # (if test "1" else "0") });
-      accum1 # foobar # "\n"
-    }));
-    //let _ = Block.genPadCodewords(version, level, data);
+    Prelude.printLn(List.foldLeft<Bool, Text>(Block.interleave(version, level, data), "", func (test, accum2) { accum2 # (if test "1" else "0") }));
     Prelude.printLn("Error: Generic encoder is not yet implemented!");
     Prelude.unreachable()
   };

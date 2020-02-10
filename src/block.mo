@@ -3,17 +3,18 @@
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : Experimental
+ * Stability  : Stable
  */
 
 import Common "common";
+import Galois "galois";
 import List "mo:stdlib/list";
 import Nat "nat";
-import Prelude "mo:stdlib/prelude";
 import Version "version";
 
 module {
 
+  type Codewords = List<List<Bool>>;
   type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
   type Version = Version.Version;
@@ -23,17 +24,28 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
-    let info = Common.info(version);
-    // TODO: Implement this function!
-    Prelude.unreachable()
+    let (blockCodewords, correctionCodewords) =
+      List.foldRight<List<Bool>, (List<Codewords>, List<Codewords>)>(
+        toBlocks(version, level, data),
+        (List.nil<Codewords>(), List.nil<Codewords>()),
+        func (block, accum) {
+          let a = List.chunksOf<Bool>(8, block);
+          let b = List.chunksOf<Bool>(8, correction(version, level, block));
+          (List.push<Codewords>(a, accum.0), List.push<Codewords>(b, accum.1))
+        }
+      );
+    List.concat<Bool>(List.fromArray<List<Bool>>([
+      flatten(blockCodewords),
+      flatten(correctionCodewords),
+      List.replicate<Bool>(Common.info(version).remainder, false)
+    ]))
   };
 
-  // 
-  public func toBlocks(
+  func toBlocks(
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
-  ) : List<List.List<Bool>> {
+  ) : List<List<Bool>> {
     func go(
       accum : List<List<Bool>>,
       chunks : List<List<Bool>>,
@@ -49,35 +61,66 @@ module {
     };
     go(
       List.nil<List<Bool>>(),
-      List.chunksOf<Bool>(8, toTargetLen(version, level, data)),
-      List.fromArray<Nat>(Common.qrDCWSizes(version, level))
-    );
+      List.chunksOf<Bool>(8, toTarget(version, level, data)),
+      List.fromArray<Nat>(Common.blockSizes(version, level))
+    )
   };
 
-  // Pad or truncate the input data to its target length.
-  func toTargetLen(
+  func toTarget(
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
   ) : List<Bool> {
-    let targetLen = Common.targetLen(version, level);
-    let baseBuf = List.take<Bool>(data, targetLen);
-    let baseBufLen = List.len<Bool>(baseBuf);
-    let zeroPadLen =
-      if (baseBufLen + 7 > targetLen) {
-        targetLen - baseBufLen
+    let targetSize = Common.targetSize(version, level);
+    let baseBuf = List.take<Bool>(data, targetSize);
+    let baseBufSize = List.len<Bool>(baseBuf);
+    let zeroPadSize =
+      if (baseBufSize + 7 > targetSize) {
+        targetSize - baseBufSize
       } else {
-        8 - baseBufLen % 8
+        8 - baseBufSize % 8
       };
-    let zeroPad = List.replicate<Bool>(zeroPadLen, false);
-    var fillPadLen = targetLen - baseBufLen - zeroPadLen;
+    let zeroPad = List.replicate<Bool>(zeroPadSize, false);
+    var fillPadSize = targetSize - baseBufSize - zeroPadSize;
     var fillPad = List.nil<Bool>();
-    while (fillPadLen > 0) {
-      let chunk = List.take<Bool>(Nat.natToBits(60433), fillPadLen);
-      fillPadLen -= List.len<Bool>(chunk);
+    while (fillPadSize > 0) {
+      let chunk = List.take<Bool>(Nat.natToBits(60433), fillPadSize);
+      fillPadSize -= List.len<Bool>(chunk);
       fillPad := List.append<Bool>(fillPad, chunk);
     };
     List.append<Bool>(baseBuf, List.append<Bool>(zeroPad, fillPad))
+  };
+
+  func correction(
+    version : Version,
+    level : ErrorCorrection,
+    data : List<Bool>
+  ) : List<Bool> {
+    let dataPoly = Galois.polyPadRight(
+      Common.correctionSize(version, level),
+      Galois.polyFromBits(data)
+    );
+    let correctionPoly = Common.correctionPoly(version, level);
+    let remainderPoly = Galois.polyDivMod(dataPoly, correctionPoly).1;
+    Galois.polyToBits(Galois.polyTrim(remainderPoly))
+  };
+
+  func flatten(data : List<Codewords>) : List<Bool> {
+    func go<X>(xss : List<List<X>>, accum : List<X>) : List<X> {
+      switch (List.pop<List<X>>(xss)) {
+        case (null, _) List.rev<X>(accum);
+        case (?h1, t1) {
+          switch (List.pop<X>(h1)) {
+            case (null, _) go<X>(t1, accum);
+            case (?h2, t2) go<X>(
+              List.append<List<X>>(t1, List.singleton<List<X>>(t2)),
+              List.push<X>(h2, accum)
+            )
+          }
+        }
+      }
+    };
+    List.concat<Bool>(go<List<Bool>>(data, List.nil<List<Bool>>()))
   };
 
 }

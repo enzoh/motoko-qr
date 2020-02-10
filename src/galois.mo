@@ -11,6 +11,7 @@ import List "mo:stdlib/list";
 import Nat "nat";
 import Prelude "mo:stdlib/prelude";
 import Prim "mo:prim";
+import Util "util"
 
 module {
 
@@ -111,7 +112,7 @@ module {
   };
 
   public func elemToBits(elem : Elem) : List<Bool> {
-    Nat.natToBits(elem.unbox)
+    Util.bitPadLeftTo(8, Nat.natToBits(elem.unbox))
   };
 
   public func elemFromBits(bits : List<Bool>) : Elem {
@@ -178,11 +179,12 @@ module {
   };
 
   public func polyToBits(poly : Poly) : List<Bool> {
-    List.map<Elem, Bool>(poly.unbox, elemToBit)
+    List.concat<Bool>(List.map<Elem, List<Bool>>(poly.unbox, elemToBits))
   };
 
   public func polyFromBits(bits : List<Bool>) : Poly {
-    { unbox = List.map<Bool, Elem>(bits, elemFromBit) }
+    let chunks = List.chunksOf<Bool>(8, bits);
+    { unbox = List.map<List<Bool>, Elem>(chunks, elemFromBits) }
   };
 
   public func polyLen(poly : Poly) : Nat {
