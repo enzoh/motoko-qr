@@ -25,10 +25,16 @@ actor {
       input = "HELLO WORLD"
     },
     {
-      version = 1;
+      version = 2;
       level = #M;
       mode = #Alphanumeric;
       input = "HTTP://SDK.DFINITY.ORG"
+    },
+    {
+      version = 10;
+      level = #Q;
+      mode = #Alphanumeric;
+      input = "I AM ALONE, AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT, WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE."
     }
   ];
 
@@ -55,5 +61,6 @@ actor {
   public func example1() : async Text { await run(0) };
   public func example2() : async Text { await run(1) };
   public func example3() : async Text { await run(2) };
+  public func example4() : async Text { await run(3) };
 
 }
