@@ -34,10 +34,7 @@ actor {
     mode : Mode,
     text : Text
   ) : async ?Matrix {
-    Option.map<List<Bool>, Matrix>(
-      func (data) {
-        Symbol.symbolize(version, level, Block.interleave(version, level, data))
-      },
+    Option.bind<List<Bool>, Matrix>(
       switch mode {
         case (#Alphanumeric) Alphanumeric.encode(version, text);
         case (#EightBit) {
@@ -49,6 +46,14 @@ actor {
           Prelude.unreachable()
         };
         case (#Numeric) Numeric.encode(version, text);
+      },
+      func (data) {
+        Option.map<List<Bool>, Matrix>(
+          func (code) {
+            Symbol.symbolize(version, level, code)
+          },
+          Block.interleave(version, level, data)
+        )
       }
     )
   };
