@@ -1,5 +1,8 @@
 {
     "canisters": {
+        "demo": {
+            "main": "app/demo.mo"
+        },
         "format": {
             "main": "test/format.mo"
         },
