@@ -25,24 +25,20 @@ module {
   type Trie<K, V> = Trie.Trie<K, V>;
   type Version = Version.Version;
 
-  // Encode the input text using the alphanumeric encoding routine.
   public func encode(version : Version, text : Text) : ?List<Bool> {
 
-    // Define the mode and character count indicators.
     let mi = List.fromArray<Bool>([false, false, true, false]);
     let cci = Util.padLeftTo(
       Common.cciLen(version, #Alphanumeric),
       Nat.natToBits(text.len())
     );
 
-    // Define a function to format the output encodings.
     func format(body : List<Bool>) : List<Bool> {
       let header = List.append<Bool>(mi, cci);
       let footer = List.replicate<Bool>(4, false);
       List.append<Bool>(header, List.append<Bool>(body, footer))
     };
 
-    // Transliterate the input text.
     let table = genTable();
     let transliteration = List.foldRight<Char, ?List<Nat>>(
       Iter.toList<Char>(Text.toIter(text)),
@@ -62,7 +58,6 @@ module {
       }
     );
 
-    // Render the output encodings. 
     Option.map<List<Bool>, List<Bool>>(
       format,
       Option.map<List<Nat>, List<Bool>>(
