@@ -3,13 +3,9 @@ install:
 - travis_retry wget https://sdk.dfinity.org/install.sh
 - yes Y | sh install.sh
 script:
-- # Start IC replica.
 - dfx start &
 - sleep 5
-- # Build and install canisters.
 - dfx build
 - dfx canister install --all
-- # Run test suites. 
-- dfx canister call format run
-- dfx canister call galois run
-- dfx canister call version run
+- dfx canister call test run
+- dfx canister call demo example1 | awk -F '"' -v RS='' '{print $2}'

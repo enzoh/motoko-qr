@@ -12,6 +12,9 @@
         "qr": {
             "main": "app/qr.mo"
         },
+        "test": {
+            "main": "app/test.mo"
+        },
         "version": {
             "main": "test/version.mo"
         }
