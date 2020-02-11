@@ -6,12 +6,8 @@
  * Stability  : Experimental
  */
 
-import Block "block";
 import Common "common";
-import Galois "galois";
 import List "mo:stdlib/list";
-import Prelude "mo:stdlib/prelude";
-import Prim "mo:prim";
 import Version "version";
 
 module {
@@ -21,14 +17,11 @@ module {
   type Matrix = Common.Matrix;
   type Version = Version.Version;
 
-  public func encode(
+  public func symbolize(
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
   ) : Matrix {
-    Prelude.printLn(List.foldLeft<Bool, Text>(Block.interleave(version, level, data), "", func (test, accum2) { accum2 # (if test "1" else "0") }));
-    Prelude.printLn("Error: Generic encoder is not yet implemented!");
-    Prelude.unreachable()
+    { unbox = [] }
   };
-
 }

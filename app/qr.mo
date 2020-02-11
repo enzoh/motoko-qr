@@ -7,12 +7,13 @@
  */
 
 import Alphanumeric "../src/alphanumeric";
+import Block "../src/block";
 import Common "../src/common";
-import Generic "../src/generic";
 import List "mo:stdlib/list";
 import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
+import Symbol "../src/symbol";
 import Version "../src/version";
 
 actor {
@@ -35,7 +36,7 @@ actor {
   ) : async ?Matrix {
     Option.map<List<Bool>, Matrix>(
       func (data) {
-        Generic.encode(version, level, data)
+        Symbol.symbolize(version, level, Block.interleave(version, level, data))
       },
       switch mode {
         case (#Alphanumeric) Alphanumeric.encode(version, text);
