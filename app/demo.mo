@@ -6,10 +6,13 @@
  * Stability  : Stable
  */
 
+import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
 import QR "canister:qr";
 
 actor {
+
+  type Matrix = QR.Matrix;
 
   let examples = [
     {
@@ -48,9 +51,11 @@ actor {
         example.mode,
         example.input
       );
-      switch result {
-        case (?matrix) await QR.show(matrix);
-        case _ "Error: Invalid input!"
+      if (Option.isSome<Matrix>(result)) {
+        let matrix = Option.unwrap<Matrix>(result);
+        await QR.show(matrix)
+      } else {
+        "Error: Invalid input!"
       }
     } else {
       Prelude.printLn("Error: Example does not exist!");
