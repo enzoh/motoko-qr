@@ -26,7 +26,7 @@ module {
   public func encode(version : Version, text : Text) : ?List<Bool> {
 
     let mi = List.fromArray<Bool>([false, false, false, true]);
-    let cci = Util.bitPadLeftTo(
+    let cci = Util.padLeftTo(
       Common.cciLen(version, #Numeric),
       Nat.natToBits(text.len())
     );
@@ -82,7 +82,7 @@ module {
 
     // 
     switch (p, n) {
-      case (?a, ?b) { ?Util.bitPadLeftTo(a, Nat.natToBits(b)) };
+      case (?a, ?b) { ?Util.padLeftTo(a, Nat.natToBits(b)) };
       case _ null
     }
 

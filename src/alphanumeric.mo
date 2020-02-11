@@ -30,7 +30,7 @@ module {
 
     // Define the mode and character count indicators.
     let mi = List.fromArray<Bool>([false, false, true, false]);
-    let cci = Util.bitPadLeftTo(
+    let cci = Util.padLeftTo(
       Common.cciLen(version, #Alphanumeric),
       Nat.natToBits(text.len())
     );
@@ -114,8 +114,8 @@ module {
 
   func encodeChunkOrTrap(chunk : List<Nat>) : List<Bool> {
     switch chunk {
-      case (?(x, null)) Util.bitPadLeftTo(6, Nat.natToBits(x));
-      case (?(x, ?(y, null))) Util.bitPadLeftTo(11, Nat.natToBits(x * 45 + y));
+      case (?(x, null)) Util.padLeftTo(6, Nat.natToBits(x));
+      case (?(x, ?(y, null))) Util.padLeftTo(11, Nat.natToBits(x * 45 + y));
       case _ {
         Prelude.printLn("Error: Invalid chunk size!");
         Prelude.unreachable();

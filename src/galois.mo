@@ -112,7 +112,7 @@ module {
   };
 
   public func elemToBits(elem : Elem) : List<Bool> {
-    Util.bitPadLeftTo(8, Nat.natToBits(elem.unbox))
+    Util.padLeftTo(8, Nat.natToBits(elem.unbox))
   };
 
   public func elemFromBits(bits : List<Bool>) : Elem {
