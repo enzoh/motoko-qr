@@ -19,5 +19,11 @@ Execute the following commands in another tab.
 ```bash
 dfx build
 dfx canister install --all
-dfx canister call qr encode '(record{unbox = 1}, variant{L}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")'
+dfx canister call demo example1 | awk -F '"' -v RS='' '{print $2}'
+```
+
+Observe the following result.
+
+```bash
+TODO: Insert QR code here.
 ```
