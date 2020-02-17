@@ -10,6 +10,9 @@ import Array "mo:stdlib/array";
 import Common "common";
 import Iter "mo:stdlib/iter";
 import List "mo:stdlib/list";
+import Nat "nat";
+import Prelude "mo:stdlib/prelude";
+import Util "util";
 import Version "version";
 
 module {
@@ -89,7 +92,9 @@ module {
 
   func finderTL(version : Version) : List<(Coordinate, Bool)> {
     let coords = finderTLCoords(version);
-    List.zip<Coordinate, Bool>(coords, finderPattern())
+
+    let pattern = Util.padLeftTo(64, Nat.natToBits(18339425943761911296));
+    List.zip<Coordinate, Bool>(coords, pattern)
   };
 
   func finderTLCoords(version : Version) : List<Coordinate> {
@@ -106,7 +111,8 @@ module {
 
   func finderTR(version : Version) : List<(Coordinate, Bool)> {
     let coords = finderTRCoords(version);
-    List.zip<Coordinate, Bool>(coords, finderPattern())
+    let pattern = Util.padLeftTo(64, Nat.natToBits(9169712971880955648));
+    List.zip<Coordinate, Bool>(coords, pattern)
   };
 
   func finderTRCoords(version : Version) : List<Coordinate> {
@@ -123,7 +129,8 @@ module {
 
   func finderBL(version : Version) : List<(Coordinate, Bool)> {
     let coords = finderBLCoords(version);
-    List.zip<Coordinate, Bool>(coords, finderPattern())
+    let pattern = Util.padLeftTo(64, Nat.natToBits(71638382592819966));
+    List.zip<Coordinate, Bool>(coords, pattern)
   };
 
   func finderBLCoords(version : Version) : List<Coordinate> {
@@ -136,23 +143,6 @@ module {
       }
     };
     coords
-  };
-
-  func finderPattern() : List<Bool> {
-    //List.replicate<Bool>(64, true)
-    List.replicate<Bool>(64, false)
-    /*
-    List.fromArray<Bool>([
-      true, true, true, true, true, true, true, false,
-      true, false, false, false, false, false, true, false,
-      true, false, true, true, true, false, true, false,
-      true, false, true, true, true, false, true, false,
-      true, false, true, true, true, false, true, false,
-      true, false, false, false, false, false, true, false,
-      true, true, true, true, true, true, true, false,
-      false, false, false, false, false, false, false, false
-    ])
-    */
   };
 
   func traceCoords(version : Version) : List<Coordinate> {
