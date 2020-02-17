@@ -15,6 +15,8 @@ import Version "version";
 
 module {
 
+  type Block = List<Bool>;
+  type Blocks = List<Block>;
   type Codewords = List<List<Bool>>;
   type Elem = Galois.Elem;
   type ErrorCorrection = Common.ErrorCorrection;
@@ -26,12 +28,12 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : ?List<Bool> {
-    Option.map<List<List<Bool>>, List<Bool>>(func (blocks) {
+    Option.map<Blocks, List<Bool>>(func (blocks) {
 
       // Calculate the codewords for each data block, as well as the
       // corresponding error correction codewords.
       let (blockCodewords, errorCodewords) =
-        List.foldRight<List<Bool>, (List<Codewords>, List<Codewords>)>(
+        List.foldRight<Block, (List<Codewords>, List<Codewords>)>(
           blocks,
           (List.nil<Codewords>(), List.nil<Codewords>()),
           func (block, accum) {
@@ -56,25 +58,25 @@ module {
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
-  ) : ?List<List<Bool>> {
-    Option.map<List<Bool>, List<List<Bool>>>(func (target) {
+  ) : ?Blocks {
+    Option.map<List<Bool>, Blocks>(func (target) {
 
       func go(
-        accum : List<List<Bool>>,
+        accum : Blocks,
         chunks : List<List<Bool>>,
         sizes : List<Nat>
-      ) : List<List<Bool>> {
+      ) : Blocks {
         switch sizes {
-          case (null) List.rev<List<Bool>>(accum);
+          case (null) List.rev<Block>(accum);
           case (?(h, t)) {
             let (a, b) = List.splitAt<List<Bool>>(h, chunks);
-            go(List.push<List<Bool>>(List.concat<Bool>(a), accum), b, t)
+            go(List.push<Block>(List.concat<Bool>(a), accum), b, t)
           }
         }
       };
 
       go(
-        List.nil<List<Bool>>(),
+        List.nil<Block>(),
         List.chunksOf<Bool>(8, target),
         List.fromArray<Nat>(Common.blockSizes(version, level))
       )
@@ -90,7 +92,7 @@ module {
 
     let dataSize = List.len<Bool>(data);
     let targetSize = Common.targetSize(version, level);
-    if (List.len<Bool>(data) > targetSize) null else {
+    if (dataSize > targetSize) null else {
 
       let zeroPadSize =
         if (dataSize + 7 > targetSize) {
