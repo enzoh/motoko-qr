@@ -63,7 +63,7 @@ actor {
     for (row in matrix.unbox.vals()) {
       for (val in row.vals()) {
         if val {
-          accum #= "██"
+          accum #= "##"
         } else {
           accum #= "  "
         }
