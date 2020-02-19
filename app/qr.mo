@@ -11,7 +11,7 @@ import Array "mo:stdlib/array";
 import Block "../src/block";
 import Common "../src/common";
 import List "mo:stdlib/list";
-import Mask "mask";
+import Mask "../src/mask";
 import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
