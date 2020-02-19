@@ -10,20 +10,42 @@
 
 Start a local internet computer.
 
-```bash
+```
 dfx start
 ```
 
 Execute the following commands in another tab.
 
-```bash
+```
 dfx build
 dfx canister install --all
-dfx canister call demo example1 | awk -F '"' -v RS='' '{print $2}'
+dfx canister call demo example1
+  | awk -F '"' -v RS='' '{print $2}'
+  | sed 's/#/█/g'
 ```
 
 Observe the following result.
 
-```bash
-TODO: Insert QR code here.
+```
+██████████████        ██    ██████████████
+██          ██      ████    ██          ██
+██  ██████  ██    ██    ██  ██  ██████  ██
+██  ██████  ██          ██  ██  ██████  ██
+██  ██████  ██    ██████    ██  ██████  ██
+██          ██    ██        ██          ██
+██████████████  ██  ██  ██  ██████████████
+                  ██  ██                  
+            ██                            
+██        ██  ████████            ██      
+██  ████    ████      ██████  ██████  ████
+██    ████              ██      ████      
+██      ████████████  ██████  ████  ██    
+                ████████  ██████  ██      
+██████████████      ██      ██      ██    
+██          ██    ██████  ██████        ██
+██  ██████  ██    ██              ██      
+██  ██████  ██                      ██    
+██  ██████  ██    ██████████  ████        
+██          ██    ██    ██      ██    ██  
+██████████████      ████████  ████        
 ```
