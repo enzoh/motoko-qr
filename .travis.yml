@@ -8,4 +8,4 @@ script:
 - dfx build
 - dfx canister install --all
 - dfx canister call test run
-- dfx canister call demo example1 | awk -F '"' -v RS='' '{print $2}'
+- dfx canister call demo example1 | awk -F '"' -v RS='' '{print ""; print $2}' | sed 's/#/█/g'
