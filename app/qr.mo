@@ -7,6 +7,7 @@
  */
 
 import Alphanumeric "../src/alphanumeric";
+import Array "mo:stdlib/array";
 import Block "../src/block";
 import Common "../src/common";
 import List "mo:stdlib/list";
@@ -59,18 +60,15 @@ actor {
   };
 
   public func show(matrix : Matrix) : async Text {
-    var accum = "";
-    for (row in matrix.unbox.vals()) {
-      for (val in row.vals()) {
-        if val {
-          accum #= "##"
+    Array.foldl<[Bool], Text>(func (accum1, row) {
+      Array.foldl<Bool, Text>(func (accum2, bit) {
+        if bit {
+          "##" # accum2
         } else {
-          accum #= "  "
+          "  " # accum2
         }
-      };
-      accum #= "\n"
-    };
-    accum
+      }, "\n", row) # accum1
+    }, "", matrix.unbox)
   };
 
   public func version(n : Nat) : async Version {
