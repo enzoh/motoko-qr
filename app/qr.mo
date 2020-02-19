@@ -52,12 +52,8 @@ actor {
       func (data) {
         Option.map<List<Bool>, Matrix>(
           func (code) {
-            Option.map<Matrix, Matrix>(
-              func (symbol) {
-                Mask.mask(version, level, symbol)
-              },
-              Symbol.symbolize(version, code)
-            )
+            let symbol = Symbol.symbolize(version, code);
+            Mask.mask(version, level, symbol)
           },
           Block.interleave(version, level, data)
         )

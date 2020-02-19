@@ -7,12 +7,19 @@
  */
 
 import Common "common";
+import Version "version";
 
 module {
 
+  type ErrorCorrection = Common.ErrorCorrection;
   type Matrix = Common.Matrix;
+  type Version = Version.Version;
 
-  public func mask(matrix : Matrix) : Matrix {
+  public func mask(
+    version : Version,
+    level : ErrorCorrection,
+    matrix : Matrix
+  ) : Matrix {
     matrix
   };
 
