@@ -11,6 +11,7 @@ import Array "mo:stdlib/array";
 import Block "../src/block";
 import Common "../src/common";
 import List "mo:stdlib/list";
+import Mask "mask";
 import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
 import Prelude "mo:stdlib/prelude";
@@ -51,7 +52,12 @@ actor {
       func (data) {
         Option.map<List<Bool>, Matrix>(
           func (code) {
-            Symbol.symbolize(version, level, code)
+            Option.map<Matrix, Matrix>(
+              func (symbol) {
+                Mask.mask(version, level, symbol)
+              },
+              Symbol.symbolize(version, code)
+            )
           },
           Block.interleave(version, level, data)
         )
