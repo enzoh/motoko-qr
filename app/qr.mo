@@ -10,11 +10,12 @@ import Alphanumeric "../src/alphanumeric";
 import Array "mo:stdlib/array";
 import Block "../src/block";
 import Common "../src/common";
+import EightBit "../src/eight-bit";
+import Kanji "../src/kanji";
 import List "mo:stdlib/list";
 import Mask "../src/mask";
 import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
-import Prelude "mo:stdlib/prelude";
 import Symbol "../src/symbol";
 import Version "../src/version";
 
@@ -39,14 +40,8 @@ actor {
     Option.bind<List<Bool>, Matrix>(
       switch mode {
         case (#Alphanumeric) Alphanumeric.encode(version, text);
-        case (#EightBit) {
-          Prelude.printLn("Error: 8-bit mode is not yet implemented!");
-          Prelude.unreachable()
-        };
-        case (#Kanji) {
-          Prelude.printLn("Error: Kanji mode is not yet implemented!");
-          Prelude.unreachable()
-        };
+        case (#EightBit) EightBit.encode(version, text);
+        case (#Kanji) Kanji.encode(version, text);
         case (#Numeric) Numeric.encode(version, text);
       },
       func (data) {
