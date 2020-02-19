@@ -34,10 +34,10 @@ actor {
       input = "HTTP://SDK.DFINITY.ORG"
     },
     {
-      version = 10;
-      level = #Q;
+      version = 8;
+      level = #H;
       mode = #Alphanumeric;
-      input = "I AM ALONE, AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT, WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE."
+      input = "I AM ALONE AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE"
     }
   ];
 
