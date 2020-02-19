@@ -28,16 +28,6 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : Matrix {
-    ////////////////////////////////////////////////////////////////////////////
-    let text = List.foldLeft<Bool, Text>(data, "", func (test, accum) {
-        accum # (if test "1" else "0")
-    });
-    Prelude.printLn(text);
-    ////////////////////////////////////////////////////////////////////////////
-    //let text2 = List.foldLeft<Coordinate, Text>(finderCoords({ unbox = 1 }), "", func (coordinate, accum) {
-    //    accum # debug_show(coordinate)
-    //});
-    //Prelude.printLn(text2);
     { unbox = freeze(applyPath(version, data, applyHardcoded(version, applyTimings(version, applyFinders(version, init(version)))))) }
   };
 
@@ -246,7 +236,7 @@ module {
     coords
   };
 
-////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   // TODO: Implement version patterns!
   func versionCoords(version : Version) : List<Coordinate> {
