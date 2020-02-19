@@ -23,11 +23,7 @@ module {
   type Matrix = Common.Matrix;
   type Version = Version.Version;
 
-  public func symbolize(
-    version : Version,
-    level : ErrorCorrection,
-    data : List<Bool>
-  ) : Matrix {
+  public func symbolize(version : Version, data : List<Bool>) : Matrix {
     { unbox = freeze(applyPath(version, data, applyHardcoded(version, applyTimings(version, applyFinders(version, init(version)))))) }
   };
 
