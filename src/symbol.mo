@@ -24,7 +24,13 @@ module {
   type Version = Version.Version;
 
   public func symbolize(version : Version, data : List<Bool>) : Matrix {
-    { unbox = freeze(applyPath(version, data, applyHardcoded(version, applyTimings(version, applyFinders(version, init(version)))))) }
+    { unbox = freeze(
+      applyAlignments(version,
+      applyData(version, data,
+      applyFinders(version,
+      applyHardcode(version,
+      applyTimings(version, init(version)))))))
+    }
   };
 
   func init(version : Version) : [var [var Bool]] {
@@ -176,20 +182,20 @@ module {
     List.map<Coordinate, Coordinate>(coords, func (a, b) { (b, a) })
   };
 
-  func applyHardcoded(
+  func applyHardcode(
     version : Version,
     matrix : [var [var Bool]]
   ) : [var [var Bool]] {
-    apply(hardcoded(version), matrix)
+    apply(hardcode(version), matrix)
   };
 
-  func hardcoded(version : Version) : List<(Coordinate, Bool)> {
-    let coords = hardcodedCoords(version);
+  func hardcode(version : Version) : List<(Coordinate, Bool)> {
+    let coords = hardcodeCoords(version);
     let pattern = List.singleton<Bool>(true);
     List.zip<Coordinate, Bool>(coords, pattern)
   };
 
-  func hardcodedCoords(version : Version) : List<Coordinate> {
+  func hardcodeCoords(version : Version) : List<Coordinate> {
     let w = Common.info(version).width;
     let c = w - 9;
     List.singleton<Coordinate>((7, c))
@@ -239,14 +245,55 @@ module {
     List.nil<Coordinate>()
   };
 
-  // TODO: Implement alignment patterns!
-  func alignmentCoords(version : Version) : List<Coordinate> {
-    List.nil<Coordinate>()
-  };
-
   //////////////////////////////////////////////////////////////////////////////
 
-  func applyPath(
+  func applyAlignments(
+    version : Version,
+    matrix : [var [var Bool]]
+  ) : [var [var Bool]] {
+    apply(alignment(version), matrix)
+  };
+
+  func alignment(version : Version) : List<(Coordinate, Bool)> {
+    let n = Common.alignments(version).len() ** 2;
+    let coords = alignmentCoords(version);
+    let pattern = List.concat<Bool>(List.replicate<List<Bool>>(
+      if (n < 4) 0 else n - 3,
+      Nat.natToBits(33084991)
+    ));
+    List.zip<Coordinate, Bool>(coords, pattern)
+  };
+
+  func alignmentCoords(version : Version) : List<Coordinate> {
+    let alignments = Common.alignments(version);
+    if (alignments.len() == 0) {
+      List.nil<Coordinate>()
+    } else {
+      let a = alignments[0];
+      let b = alignments[alignments.len() - 1];
+      let reserved = List.fromArray<Coordinate>([(a, b), (b, a), (b, b)]);
+      func isReserved(r : Nat, c : Nat) : Bool {
+        List.exists<Coordinate>(reserved, func (x, y) {
+          (x == r) and (y == c)
+        })
+      };
+      var coords = List.nil<Coordinate>();
+      for (r in Iter.fromArray<Nat>(alignments)) {
+        for (c in Iter.fromArray<Nat>(alignments)) {
+          if (not isReserved(r, c)) {
+            for (i in Iter.range(r - 2, r + 2)) {
+              for (j in Iter.range(c - 2, c + 2)) {
+                coords := List.push<Coordinate>((i, j), coords)
+              }
+            }
+          }
+        }
+      };
+      coords
+    }
+  };
+
+  func applyData(
     version : Version,
     data : List<Bool>,
     matrix : [var [var Bool]]
@@ -263,9 +310,9 @@ module {
     List.foldLeft<Coordinate, List<Coordinate>>(
       patternCoords(version),
       traceCoords(version),
-      func (y, coords) {
-        List.filter<Coordinate>(coords, func (x) {
-          not ((x.0 == y.0) and (x.1 == y.1))
+      func ((r, c), coords) {
+        List.filter<Coordinate>(coords, func (x, y) {
+          not ((x == r) and (y == c))
         })
       }
     )
@@ -275,7 +322,7 @@ module {
     List.concat<Coordinate>(List.fromArray<List<Coordinate>>([
       finderCoords(version),
       timingCoords(version),
-      hardcodedCoords(version),
+      hardcodeCoords(version),
       formatCoords(version),
       versionCoords(version),
       alignmentCoords(version)
@@ -293,15 +340,15 @@ module {
     ));
     let down = List.rev<Nat>(up);
 
-    func rowwise(n : Nat, indices : List<Nat>) : List<Nat> {
-      List.concat<Nat>(List.replicate<List<Nat>>(n * w, indices))
+    func rowwise(n : Nat, idxs : List<Nat>) : List<Nat> {
+      List.concat<Nat>(List.replicate<List<Nat>>(n * w, idxs))
     };
 
-    func columnwise(indices : List<Nat>) : List<Nat> {
+    func columnwise(idxs : List<Nat>) : List<Nat> {
       List.concat<Nat>(
         List.concat<List<Nat>>(
           List.map<List<Nat>, List<List<Nat>>>(
-            List.chunksOf<Nat>(2, indices),
+            List.chunksOf<Nat>(2, idxs),
             func (chunk) {
               List.replicate<List<Nat>>(w, chunk)
             }
@@ -321,7 +368,7 @@ module {
       List.zip<Nat, Nat>(rows2, cols2)
     );
 
-    List.filter<Coordinate>(coords, func (coord) { coord.0 != t })
+    List.filter<Coordinate>(coords, func (x, _) { x != t })
   };
 
 }
