@@ -23,13 +23,10 @@ actor {
 
   type List<T> = List.List<T>;
 
-  public type Version = Version.Version;
-
   public type ErrorCorrection = Common.ErrorCorrection;
-
-  public type Mode = Common.Mode;
-
   public type Matrix = Common.Matrix;
+  public type Mode = Common.Mode;
+  public type Version = Version.Version;
 
   public func encode(
     version : Version,
@@ -47,8 +44,12 @@ actor {
       func (data) {
         Option.map<List<Bool>, Matrix>(
           func (code) {
-            let symbol = Symbol.symbolize(version, code);
-            Mask.mask(version, level, symbol)
+            let (matrix, mask) = Mask.generate(version, level, code);
+            { unbox =
+              Symbol.freeze(
+              Symbol.applyVersions(version,
+              Symbol.applyFormats(version, level, mask, matrix)))
+            }
           },
           Block.interleave(version, level, data)
         )
@@ -58,12 +59,9 @@ actor {
 
   public func show(matrix : Matrix) : async Text {
     Array.foldl<[Bool], Text>(func (accum1, row) {
-      Array.foldl<Bool, Text>(func (accum2, bit) {
-        if bit {
-          "##" # accum2
-        } else {
-          "  " # accum2
-        }
+      Array.foldl<Bool, Text>(func (accum2, col) {
+        let text = if col "##" else "  ";
+        text # accum2
       }, "\n", row) # accum1
     }, "", matrix.unbox)
   };

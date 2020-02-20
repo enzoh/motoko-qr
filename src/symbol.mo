@@ -20,17 +20,17 @@ module {
   type Coordinate = (Nat, Nat);
   type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
-  type Matrix = Common.Matrix;
   type Version = Version.Version;
 
-  public func symbolize(version : Version, data : List<Bool>) : Matrix {
-    { unbox = freeze(
-      applyAlignments(version,
-      applyHardcode(version,
-      applyTimings(version,
-      applyFinders(version,
-      applyData(version, data,init(version)))))))
-    }
+  public func symbolize(
+    version : Version,
+    data : List<Bool>
+  ) : [var [var Bool]] {
+    applyAlignments(version,
+    applyHardcode(version,
+    applyTimings(version,
+    applyFinders(version,
+    applyData(version, data,init(version))))))
   };
 
   func init(version : Version) : [var [var Bool]] {
@@ -54,7 +54,7 @@ module {
     matrix
   };
 
-  func freeze(matrix : [var [var Bool]]) : [[Bool]] {
+  public func freeze(matrix : [var [var Bool]]) : [[Bool]] {
     Array.map<[var Bool], [Bool]>(
       func (row) { Array.freeze<Bool>(row) },
       Array.freeze<[var Bool]>(matrix)
@@ -239,7 +239,7 @@ module {
     for (j in Iter.range(c + 2, w - 1)) {
       coords := List.push<Coordinate>((r, j), coords)
     };
-    List.rev<Coordinate>(coords)
+    coords
   };
 
   func formatVCoords(version : Version) : List<Coordinate> {
@@ -255,7 +255,7 @@ module {
     for (i in Iter.range(w - 6, w - 1)) {
       coords := List.push<Coordinate>((i, c), coords)
     };
-    coords
+    List.rev<Coordinate>(coords)
   };
 
   public func applyVersions(
@@ -355,7 +355,7 @@ module {
     List.zip<Coordinate, Bool>(coords, data)
   };
 
-  func pathCoords(version : Version) : List<Coordinate> {
+  public func pathCoords(version : Version) : List<Coordinate> {
     List.foldLeft<Coordinate, List<Coordinate>>(
       patternCoords(version),
       traceCoords(version),

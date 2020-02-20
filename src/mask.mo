@@ -7,20 +7,24 @@
  */
 
 import Common "common";
+import List "mo:stdlib/list";
+import Symbol "symbol";
 import Version "version";
 
 module {
 
   type ErrorCorrection = Common.ErrorCorrection;
-  type Matrix = Common.Matrix;
+  type List<T> = List.List<T>;
   type Version = Version.Version;
 
-  public func mask(
+  public func generate(
     version : Version,
     level : ErrorCorrection,
-    matrix : Matrix
-  ) : Matrix {
-    matrix
+    data : List<Bool>
+  ) : ([var [var Bool]], List<Bool>) {
+    // TODO: Implement masking!
+    let matrix = Symbol.symbolize(version, data);
+    (matrix, List.fromArray<Bool>([false, true, true]))
   };
 
 }
