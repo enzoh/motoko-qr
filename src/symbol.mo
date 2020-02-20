@@ -3,15 +3,15 @@
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : Experimental
+ * Stability  : stable
  */
 
 import Array "mo:stdlib/array";
 import Common "common";
+import Format "format";
 import Iter "mo:stdlib/iter";
 import List "mo:stdlib/list";
 import Nat "nat";
-import Prelude "mo:stdlib/prelude";
 import Util "util";
 import Version "version";
 
@@ -26,10 +26,10 @@ module {
   public func symbolize(version : Version, data : List<Bool>) : Matrix {
     { unbox = freeze(
       applyAlignments(version,
-      applyData(version, data,
-      applyFinders(version,
       applyHardcode(version,
-      applyTimings(version, init(version)))))))
+      applyTimings(version,
+      applyFinders(version,
+      applyData(version, data,init(version)))))))
     }
   };
 
@@ -201,6 +201,26 @@ module {
     List.singleton<Coordinate>((7, c))
   };
 
+  public func applyFormats(
+    version : Version,
+    level : ErrorCorrection,
+    mask : List<Bool>,
+    matrix : [var [var Bool]]
+  ) : [var [var Bool]] {
+    apply(formats(version, level, mask), matrix)
+  };
+
+  func formats(
+    version : Version,
+    level : ErrorCorrection,
+    mask : List<Bool>
+  ) : List<(Coordinate, Bool)> {
+    let coords = formatCoords(version);
+    let pattern = Format.encode(level, mask);
+    let cycles = List.append<Bool>(pattern, pattern);
+    List.zip<Coordinate, Bool>(coords, cycles)
+  };
+
   func formatCoords(version : Version) : List<Coordinate> {
     List.append<Coordinate>(formatHCoords(version), formatVCoords(version))
   };
@@ -238,14 +258,41 @@ module {
     coords
   };
 
-  //////////////////////////////////////////////////////////////////////////////
-
-  // TODO: Implement version patterns!
-  func versionCoords(version : Version) : List<Coordinate> {
-    List.nil<Coordinate>()
+  public func applyVersions(
+    version : Version,
+    matrix : [var [var Bool]]
+  ) : [var [var Bool]] {
+    apply(versions(version), matrix)
   };
 
-  //////////////////////////////////////////////////////////////////////////////
+  func versions(version : Version) : List<(Coordinate, Bool)> {
+    let coords = versionCoords(version);
+    let pattern = Version.encode(version);
+    let cycles = List.append<Bool>(pattern, pattern);
+    List.zip<Coordinate, Bool>(coords, cycles)
+  };
+
+  func versionCoords(version : Version) : List<Coordinate> {
+    List.append<Coordinate>(versionTRCoords(version), versionBLCoords(version))
+  };
+
+  func versionTRCoords(version : Version) : List<Coordinate> {
+    if (version.unbox < 7) {
+      List.nil<Coordinate>()
+    } else {
+      func go(n : Nat, a : Nat, b : Nat) : List<Nat> {
+        let idxs = Iter.toList<Nat>(Iter.range(a, b));
+        List.concat<Nat>(List.replicate<List<Nat>>(n, idxs))
+      };
+      let w = Common.info(version).width;
+      List.zip<Nat, Nat>(go(3, w - 6, w - 1), go(5, 8, 10))
+    }
+  };
+
+  func versionBLCoords(version : Version) : List<Coordinate> {
+    let coords = versionTRCoords(version);
+    List.map<Coordinate, Coordinate>(coords, func (a, b) { (b, a) })
+  };
 
   func applyAlignments(
     version : Version,
@@ -256,19 +303,20 @@ module {
 
   func alignment(version : Version) : List<(Coordinate, Bool)> {
     let n = Common.alignments(version).len() ** 2;
+    let m = if (n < 4) 0 else n - 3;
     let coords = alignmentCoords(version);
-    let pattern = List.concat<Bool>(List.replicate<List<Bool>>(
-      if (n < 4) 0 else n - 3,
-      Nat.natToBits(33084991)
-    ));
-    List.zip<Coordinate, Bool>(coords, pattern)
+    let pattern = Nat.natToBits(33084991);
+    let cycles = List.concat<Bool>(List.replicate<List<Bool>>(m, pattern));
+    List.zip<Coordinate, Bool>(coords, cycles)
   };
 
   func alignmentCoords(version : Version) : List<Coordinate> {
+
     let alignments = Common.alignments(version);
     if (alignments.len() == 0) {
       List.nil<Coordinate>()
     } else {
+
       let a = alignments[0];
       let b = alignments[alignments.len() - 1];
       let reserved = List.fromArray<Coordinate>([(a, b), (b, a), (b, b)]);
@@ -277,6 +325,7 @@ module {
           (x == r) and (y == c)
         })
       };
+
       var coords = List.nil<Coordinate>();
       for (r in Iter.fromArray<Nat>(alignments)) {
         for (c in Iter.fromArray<Nat>(alignments)) {
