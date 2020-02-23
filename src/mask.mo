@@ -26,7 +26,7 @@ module {
     [true, false, true],
     [true, true, false],
     [true, true, true]
-  ]
+  ];
 
   public func generate(
     version : Version,
@@ -53,7 +53,7 @@ module {
       version,
       List.zipWith<Bool, Bool, Bool>(mask, data, func (x, y) { x != y })
     );
-    (matrix, List.fromArray<Bool>(maskRef))
+    (matrix, maskRef)
   };
 
 }
