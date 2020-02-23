@@ -51,9 +51,11 @@ actor {
         example.mode,
         example.text
       );
-      switch result {
-        case (?matrix) await QR.show(matrix);
-        case _ "Error: Invalid input!"
+      if Option.isSome<Matrix>(result) {
+        let matrix = Option.unwrap<Matrix>(result);
+        await QR.show(matrix)
+      } else {
+        "Error: Invalid input!"
       }
     } else {
       Prelude.printLn("Error: Example does not exist!");
