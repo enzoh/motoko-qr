@@ -51,7 +51,7 @@ actor {
         example.mode,
         example.text
       );
-      if Option.isSome<Matrix>(result) {
+      if (Option.isSome<Matrix>(result)) {
         let matrix = Option.unwrap<Matrix>(result);
         await QR.show(matrix)
       } else {
