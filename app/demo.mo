@@ -19,25 +19,25 @@ actor {
       version = 1;
       level = #M;
       mode = #Numeric;
-      input = "01234567"
+      text = "01234567"
     },
     {
       version = 1;
       level = #Q;
       mode = #Alphanumeric;
-      input = "HELLO WORLD"
+      text = "HELLO WORLD"
     },
     {
       version = 2;
       level = #M;
       mode = #Alphanumeric;
-      input = "HTTP://SDK.DFINITY.ORG"
+      text = "HTTP://SDK.DFINITY.ORG"
     },
     {
       version = 8;
       level = #H;
       mode = #Alphanumeric;
-      input = "I AM ALONE AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE"
+      text = "I AM ALONE AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE"
     }
   ];
 
@@ -49,13 +49,11 @@ actor {
         version,
         example.level,
         example.mode,
-        example.input
+        example.text
       );
-      if (Option.isSome<Matrix>(result)) {
-        let matrix = Option.unwrap<Matrix>(result);
-        await QR.show(matrix)
-      } else {
-        "Error: Invalid input!"
+      switch result {
+        case (?matrix) await QR.show(matrix);
+        case _ "Error: Invalid input!"
       }
     } else {
       Prelude.printLn("Error: Example does not exist!");
