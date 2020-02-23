@@ -8,52 +8,73 @@
 
 import Common "common";
 import List "mo:stdlib/list";
+import Option "mo:stdlib/option";
 import Symbol "symbol";
 import Version "version";
 
 module {
 
+  type Candidate = ([var [var Bool]], List<Bool>);
   type ErrorCorrection = Common.ErrorCorrection;
   type List<T> = List.List<T>;
   type Version = Version.Version;
-
-  let maskRefs = [
-    [false, false, false],
-    [false, false, true],
-    [false, true, false],
-    [false, true, true],
-    [true, false, false],
-    [true, false, true],
-    [true, true, false],
-    [true, true, true]
-  ];
 
   public func generate(
     version : Version,
     level : ErrorCorrection,
     data : List<Bool>
   ) : ([var [var Bool]], List<Bool>) {
-    // TODO: Implement masking!
-    let maskRef = List.fromArray<Bool>([false, true, true]);
-    let mask = List.map<(Nat, Nat), Bool>(Symbol.pathCoords(version), func (a, b) {
+
+    let tests = List.fromArray<(Nat, Nat) -> Bool>([
+      maskTest000, maskTest001, maskTest010, maskTest011,
+      maskTest100, maskTest101, maskTest110, maskTest111
+    ]);
+
+    let masks = List.map<(Nat, Nat) -> Bool, List<Bool>>(tests, func (test) {
       let w = Common.info(version).width;
-      func fix(n : Nat) : Nat { w - 1 - n };
-      let i = fix(a);
-      let j = fix(b);
-      // (i+j) % 2 == 0
-      // i % 2 == 0
-      // j % 3 == 0
-      (i+j) % 3 == 0
-      // ((i / 2) + (j / 3)) % 2 == 0
-      // (i*j) % 2 + (i*j) % 3 == 0
-      // ((i*j) % 2 + (i*j) % 3) % 2 == 0
-      // ((i*j) % 3 + (i+j) % 2) % 2 == 0
+      func mirror(n : Nat) : Nat { w - n - 1 };
+      List.map<(Nat, Nat), Bool>(Symbol.pathCoords(version), func (i, j) {
+        test(mirror(i), mirror(j))
+      })
     });
-    let matrix = Symbol.symbolize(
-      version,
-      List.zipWith<Bool, Bool, Bool>(mask, data, func (x, y) { x != y })
+
+    let matrices = List.map<List<Bool>, [var [var Bool]]>(masks, func (mask) {
+      Symbol.symbolize(
+        version,
+        List.zipWith<Bool, Bool, Bool>(mask, data, func (x, y) { x != y })
+      )
+    });
+
+    let maskRefs = List.fromArray<List<Bool>>([
+      maskRef000, maskRef001, maskRef010, maskRef011,
+      maskRef100, maskRef101, maskRef110, maskRef111
+    ]);
+
+    let candidates = List.zip<[var [var Bool]], List<Bool>>(
+      matrices,
+      maskRefs
     );
-    (matrix, maskRef)
+
+    // TODO: Score candidates.
+    Option.unwrap<Candidate>(List.nth<Candidate>(candidates, 7))
   };
+
+  let maskRef000 = ?(false, ?(false, ?(false, null)));
+  let maskRef001 = ?(false, ?(false, ?(true,  null)));
+  let maskRef010 = ?(false, ?(true,  ?(false, null)));
+  let maskRef011 = ?(false, ?(true,  ?(true,  null)));
+  let maskRef100 = ?(true,  ?(false, ?(false, null)));
+  let maskRef101 = ?(true,  ?(false, ?(true,  null)));
+  let maskRef110 = ?(true,  ?(true,  ?(false, null)));
+  let maskRef111 = ?(true,  ?(true,  ?(true,  null)));
+
+  func maskTest000(i : Nat, j : Nat) : Bool { (i + j) % 2 == 0 };
+  func maskTest001(i : Nat, j : Nat) : Bool { i % 2 == 0 };
+  func maskTest010(i : Nat, j : Nat) : Bool { j % 3 == 0 };
+  func maskTest011(i : Nat, j : Nat) : Bool { (i + j) % 3 == 0 };
+  func maskTest100(i : Nat, j : Nat) : Bool { ((i / 2) + (j / 3)) % 2 == 0 };
+  func maskTest101(i : Nat, j : Nat) : Bool { (i * j) % 2 + (i * j) % 3 == 0 };
+  func maskTest110(i : Nat, j : Nat) : Bool { ((i * j) % 2 + (i * j) % 3) % 2 == 0 };
+  func maskTest111(i : Nat, j : Nat) : Bool { ((i * j) % 3 + (i + j) % 2) % 2 == 0 };
 
 }
