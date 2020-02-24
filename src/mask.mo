@@ -56,7 +56,7 @@ module {
     );
 
     // TODO: Score candidates.
-    Option.unwrap<Candidate>(List.nth<Candidate>(candidates, 7))
+    Option.unwrap<Candidate>(List.nth<Candidate>(candidates, 3))
   };
 
   let maskRef000 = ?(false, ?(false, ?(false, null)));
