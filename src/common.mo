@@ -3,7 +3,7 @@
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
- * Stability  : Experimental
+ * Stability  : stable
  */
 
 import Array "mo:stdlib/array";
@@ -19,59 +19,72 @@ module {
   type Version = Version.Version;
 
   public type ErrorCorrection = { #L; #M; #Q; #H };
-
-  public type Info = { capacity : Nat; remainder : Nat; width : Nat };
-
   public type Matrix = { unbox : [[Bool]] };
-
   public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
 
-  public func info(version : Version) : Info {
+  public func alignments(version : Version) : [Nat] {
     [
-      { capacity = 0026; remainder = 0; width = 021 },
-      { capacity = 0044; remainder = 7; width = 025 },
-      { capacity = 0070; remainder = 7; width = 029 },
-      { capacity = 0100; remainder = 7; width = 033 },
-      { capacity = 0134; remainder = 7; width = 037 },
-      { capacity = 0172; remainder = 7; width = 041 },
-      { capacity = 0196; remainder = 0; width = 045 },
-      { capacity = 0242; remainder = 0; width = 049 },
-      { capacity = 0292; remainder = 0; width = 053 },
-      { capacity = 0346; remainder = 0; width = 057 },
-      { capacity = 0404; remainder = 0; width = 061 },
-      { capacity = 0466; remainder = 0; width = 065 },
-      { capacity = 0532; remainder = 0; width = 069 },
-      { capacity = 0581; remainder = 3; width = 073 },
-      { capacity = 0655; remainder = 3; width = 077 },
-      { capacity = 0733; remainder = 3; width = 081 },
-      { capacity = 0815; remainder = 3; width = 085 },
-      { capacity = 0901; remainder = 3; width = 089 },
-      { capacity = 0991; remainder = 3; width = 093 },
-      { capacity = 1085; remainder = 3; width = 097 },
-      { capacity = 1156; remainder = 4; width = 101 },
-      { capacity = 1258; remainder = 4; width = 105 },
-      { capacity = 1364; remainder = 4; width = 109 },
-      { capacity = 1474; remainder = 4; width = 113 },
-      { capacity = 1588; remainder = 4; width = 117 },
-      { capacity = 1706; remainder = 4; width = 121 },
-      { capacity = 1828; remainder = 4; width = 125 },
-      { capacity = 1921; remainder = 3; width = 129 },
-      { capacity = 2051; remainder = 3; width = 133 },
-      { capacity = 2185; remainder = 3; width = 137 },
-      { capacity = 2323; remainder = 3; width = 141 },
-      { capacity = 2465; remainder = 3; width = 145 },
-      { capacity = 2611; remainder = 3; width = 149 },
-      { capacity = 2761; remainder = 3; width = 153 },
-      { capacity = 2876; remainder = 0; width = 157 },
-      { capacity = 3034; remainder = 0; width = 161 },
-      { capacity = 3196; remainder = 0; width = 165 },
-      { capacity = 3362; remainder = 0; width = 169 },
-      { capacity = 3532; remainder = 0; width = 173 },
-      { capacity = 3706; remainder = 0; width = 177 }
+      [],
+      [6,18],
+      [6,22],
+      [6,26],
+      [6,30],
+      [6,34],
+      [6,22,38],
+      [6,24,42],
+      [6,26,46],
+      [6,28,50],
+      [6,30,54],
+      [6,32,58],
+      [6,34,62],
+      [6,26,46,66],
+      [6,26,48,70],
+      [6,26,50,74],
+      [6,30,54,78],
+      [6,30,56,82],
+      [6,30,58,86],
+      [6,34,62,90],
+      [6,28,50,72,94],
+      [6,26,50,74,98],
+      [6,30,54,78,102],
+      [6,28,54,80,106],
+      [6,32,58,84,110],
+      [6,30,58,86,114],
+      [6,34,62,90,118],
+      [6,26,50,74,98,122],
+      [6,30,54,78,102,126],
+      [6,26,52,78,104,130],
+      [6,30,56,82,108,134],
+      [6,34,60,86,112,138],
+      [6,30,58,86,114,142],
+      [6,34,62,90,118,146],
+      [6,30,54,78,102,126,150],
+      [6,24,50,76,102,128,154],
+      [6,28,54,80,106,132,158],
+      [6,32,58,84,110,136,162],
+      [6,26,54,82,110,138,166]
     ][Version.unbox(version) - 1]
   };
 
-  public func match<X>(
+  public func remainder(version : Version) : Nat {
+    [
+      0, 7, 7, 7, 7, 7, 0, 0, 0, 0,
+      0, 0, 0, 3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 4, 4, 4, 4, 3, 3, 3,
+      3, 3, 3, 3, 0, 0, 0, 0, 0, 0
+    ][Version.unbox(version) - 1]
+  };
+
+  public func width(version : Version) : Nat {
+    [
+      021, 025, 029, 033, 037, 041, 045, 049, 053, 057,
+      061, 065, 069, 073, 077, 081, 085, 089, 093, 097,
+      101, 105, 109, 113, 117, 121, 125, 129, 133, 137,
+      141, 145, 149, 153, 157, 161, 165, 169, 173, 177
+    ][Version.unbox(version) - 1]
+  };
+
+  func match<X>(
     version : Version,
     level : ErrorCorrection,
     table : [X]
@@ -248,60 +261,6 @@ module {
     Galois.polyNew(Array.map<Nat, Nat>(Galois.alog, logs))
   };
 
-  public func alignments(version : Version) : [Nat] {
-    [
-      [],
-      [6,18],
-      [6,22],
-      [6,26],
-      [6,30],
-      [6,34],
-      [6,22,38],
-      [6,24,42],
-      [6,26,46],
-      [6,28,50],
-      [6,30,54],
-      [6,32,58],
-      [6,34,62],
-      [6,26,46,66],
-      [6,26,48,70],
-      [6,26,50,74],
-      [6,30,54,78],
-      [6,30,56,82],
-      [6,30,58,86],
-      [6,34,62,90],
-      [6,28,50,72,94],
-      [6,26,50,74,98],
-      [6,30,54,78,102],
-      [6,28,54,80,106],
-      [6,32,58,84,110],
-      [6,30,58,86,114],
-      [6,34,62,90,118],
-      [6,26,50,74,98,122],
-      [6,30,54,78,102,126],
-      [6,26,52,78,104,130],
-      [6,30,56,82,108,134],
-      [6,34,60,86,112,138],
-      [6,30,58,86,114,142],
-      [6,34,62,90,118,146],
-      [6,30,54,78,102,126,150],
-      [6,24,50,76,102,128,154],
-      [6,28,54,80,106,132,158],
-      [6,32,58,84,110,136,162],
-      [6,26,54,82,110,138,166]
-    ][Version.unbox(version) - 1]
-  };
-
-  public func getECIBits(level : ErrorCorrection) : List<Bool> {
-    let bits = switch (level) {
-      case (#L) { [false, true] };
-      case (#M) { [false, false] };
-      case (#Q) { [true, true] };
-      case (#H) { [true, false] }
-    };
-    List.fromArray<Bool>(bits)
-  };
-
   public func cciLen(version : Version, mode : Mode) : Nat {
     let n = Version.unbox(version);
     let i =
@@ -317,6 +276,16 @@ module {
       case (#EightBit) [8,16,16][i];
       case (#Kanji) [8,10,12][i]
     }
+  };
+
+  public func eciBits(level : ErrorCorrection) : List<Bool> {
+    let bits = switch (level) {
+      case (#L) { [false, true] };
+      case (#M) { [false, false] };
+      case (#Q) { [true, true] };
+      case (#H) { [true, false] }
+    };
+    List.fromArray<Bool>(bits)
   };
 
 }

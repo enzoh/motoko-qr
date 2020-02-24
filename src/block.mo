@@ -48,7 +48,7 @@ module {
       List.concat<Bool>(List.fromArray<List<Bool>>([
         flatten(blockCodewords),
         flatten(errorCodewords),
-        List.replicate<Bool>(Common.info(version).remainder, false)
+        List.replicate<Bool>(Common.remainder(version), false)
       ]))
 
     }, toBlocks(version, level, data))
