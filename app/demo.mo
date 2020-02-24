@@ -23,7 +23,7 @@ actor {
     text : Text
   ) : async Text {
     let result = await QR.encode(version, level, mode, text);
-    if (Option.isSome/*<Matrix>*/(result)) {
+    if (Option.isSome<Matrix>(result)) {
       let matrix = Option.unwrap<Matrix>(result);
       await QR.show(matrix)
     } else {

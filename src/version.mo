@@ -23,6 +23,10 @@ module {
     n
   };
 
+  public func new(n : Nat) : ?Version {
+    if (n > 40 or n == 0) null else ?#Version n
+  };
+
   public func encode(version : Version) : List<Bool> {
     let input = Nat.natToBits(unbox(version));
     let poly1 = Galois.polyFromBits(Util.padRight(12, input));

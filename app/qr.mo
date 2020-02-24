@@ -34,28 +34,29 @@ actor {
     mode : Mode,
     text : Text
   ) : async ?Matrix {
-    let #Version n = version;
-    if (n == 0 or 40 < n) {
-      return null
-    };
-    Option.bind<List<Bool>, Matrix>(
-      switch mode {
-        case (#Alphanumeric) Alphanumeric.encode(version, text);
-        case (#EightBit) EightBit.encode(version, text);
-        case (#Kanji) Kanji.encode(version, text);
-        case (#Numeric) Numeric.encode(version, text);
-      },
-      func (data) {
-        Option.map<List<Bool>, Matrix>(
-          func (code) {
-            let (matrix, maskRef) = Mask.generate(version, level, code);
-            { unbox =
-              Symbol.freeze(
-              Symbol.applyVersions(version,
-              Symbol.applyFormats(version, level, maskRef, matrix)))
-            }
+    Option.bind<Version, Matrix>(
+      Version.new(Version.unbox(version)),
+      func _ {
+        Option.bind<List<Bool>, Matrix>(
+          switch mode {
+            case (#Alphanumeric) Alphanumeric.encode(version, text);
+            case (#EightBit) EightBit.encode(version, text);
+            case (#Kanji) Kanji.encode(version, text);
+            case (#Numeric) Numeric.encode(version, text);
           },
-          Block.interleave(version, level, data)
+          func (data) {
+            Option.map<List<Bool>, Matrix>(
+              func (code) {
+                let (matrix, maskRef) = Mask.generate(version, level, code);
+                { unbox =
+                  Symbol.freeze(
+                  Symbol.applyVersions(version,
+                  Symbol.applyFormats(version, level, maskRef, matrix)))
+                }
+              },
+              Block.interleave(version, level, data)
+            )
+          }
         )
       }
     )
