@@ -34,6 +34,10 @@ actor {
     mode : Mode,
     text : Text
   ) : async ?Matrix {
+    let #Version n = version;
+    if (n == 0 or 40 < n) {
+      return null
+    };
     Option.bind<List<Bool>, Matrix>(
       switch mode {
         case (#Alphanumeric) Alphanumeric.encode(version, text);
@@ -44,11 +48,11 @@ actor {
       func (data) {
         Option.map<List<Bool>, Matrix>(
           func (code) {
-            let (matrix, mask) = Mask.generate(version, level, code);
+            let (matrix, maskRef) = Mask.generate(version, level, code);
             { unbox =
               Symbol.freeze(
               Symbol.applyVersions(version,
-              Symbol.applyFormats(version, level, mask, matrix)))
+              Symbol.applyFormats(version, level, maskRef, matrix)))
             }
           },
           Block.interleave(version, level, data)
@@ -64,10 +68,6 @@ actor {
         text # accum2
       }, "\n", row) # accum1
     }, "", matrix.unbox)
-  };
-
-  public func version(n : Nat) : async Version {
-    Version.new(n)
   };
 
 }

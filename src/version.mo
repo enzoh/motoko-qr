@@ -18,14 +18,6 @@ module {
 
   public type Version = { #Version : Nat };
 
-  public func new(n : Nat) : Version {
-    if (n > 40 or n == 0) {
-      Prelude.printLn("Error: Invalid version!");
-      Prelude.unreachable()
-    };
-    { #Version n }
-  };
-
   public func unbox(version : Version) : Nat {
     let #Version n = version;
     n

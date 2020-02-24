@@ -20,7 +20,7 @@ Execute the following commands in another tab.
 dfx build
 dfx canister install --all
 dfx canister call demo encode \
-  '(2, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")' \
+  '(variant{Version = 2}, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")' \
   | awk -F '"' -v RS='' '{print $2}' \
   | sed 's/#/█/g'
 ```

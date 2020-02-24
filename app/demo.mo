@@ -17,14 +17,13 @@ actor {
   type Version = QR.Version;
 
   public func encode(
-    n : Nat,
+    version : Version,
     level : ErrorCorrection,
     mode : Mode,
     text : Text
   ) : async Text {
-    let version = await QR.version(n);
     let result = await QR.encode(version, level, mode, text);
-    if (Option.isSome<Matrix>(result)) {
+    if (Option.isSome/*<Matrix>*/(result)) {
       let matrix = Option.unwrap<Matrix>(result);
       await QR.show(matrix)
     } else {
