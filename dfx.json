@@ -1,22 +1,22 @@
 {
-    "canisters": {
-        "demo": {
-            "main": "app/demo.mo"
-        },
-        "format": {
-            "main": "test/format.mo"
-        },
-        "galois": {
-            "main": "test/galois.mo"
-        },
-        "qr": {
-            "main": "app/qr.mo"
-        },
-        "test": {
-            "main": "app/test.mo"
-        },
-        "version": {
-            "main": "test/version.mo"
-        }
+  "canisters": {
+    "demo": {
+      "main": "app/demo.mo"
+    },
+    "format": {
+      "main": "test/format.mo"
+    },
+    "galois": {
+      "main": "test/galois.mo"
+    },
+    "qr": {
+      "main": "app/qr.mo"
+    },
+    "test": {
+      "main": "app/test.mo"
+    },
+    "version": {
+      "main": "test/version.mo"
     }
+  }
 }
