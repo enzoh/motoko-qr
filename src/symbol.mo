@@ -277,7 +277,7 @@ module {
   };
 
   func versionTRCoords(version : Version) : List<Coordinate> {
-    if (version.unbox < 7) {
+    if (Version.unbox(version) < 7) {
       List.nil<Coordinate>()
     } else {
       func go(n : Nat, a : Nat, b : Nat) : List<Nat> {

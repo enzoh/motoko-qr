@@ -68,7 +68,7 @@ module {
       { capacity = 3362; remainder = 0; width = 169 },
       { capacity = 3532; remainder = 0; width = 173 },
       { capacity = 3706; remainder = 0; width = 177 }
-    ][version.unbox - 1]
+    ][Version.unbox(version) - 1]
   };
 
   public func match<X>(
@@ -76,7 +76,7 @@ module {
     level : ErrorCorrection,
     table : [X]
   ) : X {
-    let i = version.unbox - 1;
+    let i = Version.unbox(version) - 1;
     let j = switch level {
       case (#L) 0;
       case (#M) 1;
@@ -289,7 +289,7 @@ module {
       [6,28,54,80,106,132,158],
       [6,32,58,84,110,136,162],
       [6,26,54,82,110,138,166]
-    ][version.unbox - 1]
+    ][Version.unbox(version) - 1]
   };
 
   public func getECIBits(level : ErrorCorrection) : List<Bool> {
@@ -303,7 +303,7 @@ module {
   };
 
   public func cciLen(version : Version, mode : Mode) : Nat {
-    let n = version.unbox;
+    let n = Version.unbox(version);
     let i =
       if (09 >= n and n >= 01) 0 else
       if (26 >= n and n >= 10) 1 else
