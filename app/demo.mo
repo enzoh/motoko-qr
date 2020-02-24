@@ -7,65 +7,29 @@
  */
 
 import Option "mo:stdlib/option";
-import Prelude "mo:stdlib/prelude";
 import QR "canister:qr";
 
 actor {
 
+  type ErrorCorrection = QR.ErrorCorrection;
   type Matrix = QR.Matrix;
+  type Mode = QR.Mode;
+  type Version = QR.Version;
 
-  let examples = [
-    {
-      version = 1;
-      level = #M;
-      mode = #Numeric;
-      text = "01234567"
-    },
-    {
-      version = 1;
-      level = #Q;
-      mode = #Alphanumeric;
-      text = "HELLO WORLD"
-    },
-    {
-      version = 2;
-      level = #M;
-      mode = #Alphanumeric;
-      text = "HTTP://SDK.DFINITY.ORG"
-    },
-    {
-      version = 8;
-      level = #H;
-      mode = #Alphanumeric;
-      text = "I AM ALONE AND FEEL THE CHARM OF EXISTENCE IN THIS SPOT WHICH WAS CREATED FOR THE BLISS OF SOULS LIKE MINE"
-    }
-  ];
-
-  func run(i : Nat) : async Text {
-    if (i < examples.len()) {
-      let example = examples[i];
-      let version = await QR.version(example.version);
-      let result = await QR.encode(
-        version,
-        example.level,
-        example.mode,
-        example.text
-      );
-      if (Option.isSome<Matrix>(result)) {
-        let matrix = Option.unwrap<Matrix>(result);
-        await QR.show(matrix)
-      } else {
-        "Error: Invalid input!"
-      }
+  public func encode(
+    n : Nat,
+    level : ErrorCorrection,
+    mode : Mode,
+    text : Text
+  ) : async Text {
+    let version = await QR.version(n);
+    let result = await QR.encode(version, level, mode, text);
+    if (Option.isSome<Matrix>(result)) {
+      let matrix = Option.unwrap<Matrix>(result);
+      await QR.show(matrix)
     } else {
-      Prelude.printLn("Error: Example does not exist!");
-      Prelude.unreachable()
+      "Error: Invalid input!"
     }
   };
-
-  public func example1() : async Text { await run(0) };
-  public func example2() : async Text { await run(1) };
-  public func example3() : async Text { await run(2) };
-  public func example4() : async Text { await run(3) };
 
 }
