@@ -6,13 +6,11 @@
  * Stability  : Stable
  */
 
-import Option "mo:stdlib/option";
 import QR "canister:qr";
 
 actor {
 
   type ErrorCorrection = QR.ErrorCorrection;
-  type Matrix = QR.Matrix;
   type Mode = QR.Mode;
   type Version = QR.Version;
 
@@ -23,11 +21,9 @@ actor {
     text : Text
   ) : async Text {
     let result = await QR.encode(version, level, mode, text);
-    if (Option.isSome<Matrix>(result)) {
-      let matrix = Option.unwrap<Matrix>(result);
-      await QR.show(matrix)
-    } else {
-      "Error: Invalid input!"
+    switch result {
+      case (?matrix) await QR.show(matrix);
+      case _ "Error: Invalid input!";
     }
   };
 
