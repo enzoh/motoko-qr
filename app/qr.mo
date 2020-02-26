@@ -6,15 +6,12 @@
  * Stability  : Stable
  */
 
-import Alphanumeric "../src/alphanumeric";
 import Array "mo:stdlib/array";
 import Block "../src/block";
 import Common "../src/common";
-import EightBit "../src/eight-bit";
-import Kanji "../src/kanji";
+import Generic "../src/generic";
 import List "mo:stdlib/list";
 import Mask "../src/mask";
-import Numeric "../src/numeric";
 import Option "mo:stdlib/option";
 import Symbol "../src/symbol";
 import Version "../src/version";
@@ -38,12 +35,7 @@ actor {
       Version.new(Version.unbox(version)),
       func _ {
         Option.bind<List<Bool>, Matrix>(
-          switch mode {
-            case (#Alphanumeric) Alphanumeric.encode(version, text);
-            case (#EightBit) EightBit.encode(version, text);
-            case (#Kanji) Kanji.encode(version, text);
-            case (#Numeric) Numeric.encode(version, text);
-          },
+          Generic.encode(version, mode, text),
           func (data) {
             Option.map<List<Bool>, Matrix>(
               func (code) {
