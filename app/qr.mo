@@ -39,12 +39,12 @@ actor {
           func (data) {
             Option.map<List<Bool>, Matrix>(
               func (code) {
-                let (matrix, maskRef) = Mask.generate(version, level, code);
-                { unbox =
+                let (symbol, maskRef) = Mask.generate(version, level, code);
+                #Matrix (
                   Symbol.freeze(
                   Symbol.applyVersions(version,
-                  Symbol.applyFormats(version, level, maskRef, matrix)))
-                }
+                  Symbol.applyFormats(version, level, maskRef, symbol)))
+                )
               },
               Block.interleave(version, level, data)
             )
@@ -55,12 +55,13 @@ actor {
   };
 
   public func show(matrix : Matrix) : async Text {
-    Array.foldl<[Bool], Text>(func (accum1, row) {
-      Array.foldl<Bool, Text>(func (accum2, col) {
-        let text = if col "##" else "  ";
+    let #Matrix arrays = matrix;
+    Array.foldl<[Bool], Text>(func (accum1, array) {
+      Array.foldl<Bool, Text>(func (accum2, bit) {
+        let text = if bit "##" else "  ";
         text # accum2
-      }, "\n", row) # accum1
-    }, "", matrix.unbox)
+      }, "\n", array) # accum1
+    }, "", arrays)
   };
 
 }

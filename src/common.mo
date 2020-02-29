@@ -19,7 +19,7 @@ module {
   type Version = Version.Version;
 
   public type ErrorCorrection = { #L; #M; #Q; #H };
-  public type Matrix = { unbox : [[Bool]] };
+  public type Matrix = { #Matrix : [[Bool]] };
   public type Mode = { #Alphanumeric; #EightBit; #Kanji; #Numeric };
 
   public func alignments(version : Version) : [Nat] {
