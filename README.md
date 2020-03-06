@@ -21,7 +21,7 @@ dfx build
 dfx canister install --all
 dfx canister call demo encode \
   '(variant{Version = 2}, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")' \
-  | awk -F '"' -v RS='' '{print $2}' \
+  | sed 's/[(")]//g'
   | sed 's/#/█/g'
 ```
 
