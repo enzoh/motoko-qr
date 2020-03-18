@@ -40,11 +40,11 @@ actor {
             Option.bind<List<Bool>, Matrix>(
               Block.interleave(version, level, data),
               func (code) {
-                let (symbol, maskRef) = Mask.generate(version, level, code);
+                let (arrays, maskRef) = Mask.generate(version, level, code);
                 ?#Matrix (
                   Symbol.freeze(
                   Symbol.applyVersions(version,
-                  Symbol.applyFormats(version, level, maskRef, symbol)))
+                  Symbol.applyFormats(version, level, maskRef, arrays)))
                 )
               }
             )
