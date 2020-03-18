@@ -37,16 +37,16 @@ actor {
         Option.bind<List<Bool>, Matrix>(
           Generic.encode(version, mode, text),
           func (data) {
-            Option.map<List<Bool>, Matrix>(
+            Option.bind<List<Bool>, Matrix>(
+              Block.interleave(version, level, data),
               func (code) {
                 let (symbol, maskRef) = Mask.generate(version, level, code);
-                #Matrix (
+                ?#Matrix (
                   Symbol.freeze(
                   Symbol.applyVersions(version,
                   Symbol.applyFormats(version, level, maskRef, symbol)))
                 )
-              },
-              Block.interleave(version, level, data)
+              }
             )
           }
         )
