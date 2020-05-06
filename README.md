@@ -1,6 +1,5 @@
-## A QR Code Generator in Pure Motoko
-
-[![Build Status](https://travis-ci.org/enzoh/qr.svg?branch=master)](https://travis-ci.org/enzoh/qr?branch=master)
+## The QR Canister
+[![Build Status](https://travis-ci.org/enzoh/motoko-qr.svg?branch=master)](https://travis-ci.org/enzoh/motoko-qr?branch=master)
 
 ### Prerequisites
 
