@@ -1,5 +1,5 @@
 /**
- * Module     : symbol.mo
+ * Module     : Symbol.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -7,13 +7,13 @@
  */
 
 import Array "mo:base/Array";
-import Common "common";
-import Format "format";
+import Common "Common";
+import Format "Format";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
-import Nat "nat";
-import Util "util";
-import Version "version";
+import Nat "Nat";
+import Util "Util";
+import Version "Version";
 
 module {
 

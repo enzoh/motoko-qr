@@ -1,5 +1,5 @@
 /**
- * Module     : numeric.mo
+ * Module     : Numeric.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -7,15 +7,15 @@
  */
 
 import Char "mo:base/Char";
-import Common "common";
+import Common "Common";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
-import Nat "nat";
+import Nat "Nat";
 import Option "mo:base/Option";
 import Prim "mo:prim";
 import Text "mo:base/Text";
-import Util "util";
-import Version "version";
+import Util "Util";
+import Version "Version";
 
 module {
 

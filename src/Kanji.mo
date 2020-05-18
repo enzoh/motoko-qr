@@ -1,5 +1,5 @@
 /**
- * Module     : eight-bit.mo
+ * Module     : Kanji.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -8,7 +8,7 @@
 
 import List "mo:base/List";
 import Prelude "mo:base/Prelude";
-import Version "version";
+import Version "Version";
 
 module {
 
@@ -16,7 +16,7 @@ module {
   type Version = Version.Version;
 
   public func encode(version : Version, text : Text) : ?List<Bool> {
-    Prelude.printLn("Error: Eight-bit mode is not yet implemented!");
+    Prelude.printLn("Error: Kanji mode is not yet implemented!");
     Prelude.unreachable()
   };
 

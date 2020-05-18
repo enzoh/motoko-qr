@@ -7,14 +7,14 @@
  */
 
 import Array "mo:base/Array";
-import Block "../src/block";
-import Common "../src/common";
-import Generic "../src/generic";
+import Block "../src/Block";
+import Common "../src/Common";
+import Generic "../src/Generic";
 import List "mo:base/List";
-import Mask "../src/mask";
+import Mask "../src/Mask";
 import Option "mo:base/Option";
-import Symbol "../src/symbol";
-import Version "../src/version";
+import Symbol "../src/Symbol";
+import Version "../src/Version";
 
 actor {
 

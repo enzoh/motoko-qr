@@ -1,5 +1,5 @@
 /**
- * Module     : galois.mo
+ * Module     : Galois.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -8,10 +8,10 @@
 
 import Array "mo:base/Array";
 import List "mo:base/List";
-import Nat "nat";
+import Nat "Nat";
 import Prelude "mo:base/Prelude";
 import Prim "mo:prim";
-import Util "util"
+import Util "Util"
 
 module {
 

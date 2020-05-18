@@ -1,16 +1,16 @@
 /**
- * Module     : mask.mo
+ * Module     : Mask.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Experimental
  */
 
-import Common "common";
+import Common "Common";
 import List "mo:base/List";
 import Option "mo:base/Option";
-import Symbol "symbol";
-import Version "version";
+import Symbol "Symbol";
+import Version "Version";
 
 module {
 

@@ -1,16 +1,16 @@
 /**
- * Module     : format.mo
+ * Module     : Format.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Stable
  */
 
-import Common "common";
-import Galois "galois";
+import Common "Common";
+import Galois "Galois";
 import List "mo:base/List";
-import Nat "nat";
-import Util "util";
+import Nat "Nat";
+import Util "Util";
 
 module {
 

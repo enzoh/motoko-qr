@@ -1,14 +1,14 @@
 /**
- * Module     : format.mo
+ * Module     : Format.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Stable
  */
 
-import Format "../src/format";
+import Format "../src/Format";
 import List "mo:base/List";
-import Nat "../src/nat";
+import Nat "../src/Nat";
 
 actor {
 

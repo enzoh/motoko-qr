@@ -1,18 +1,18 @@
 /**
- * Module     : generic.mo
+ * Module     : Generic.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Stable
  */
 
-import Alphanumeric "../src/alphanumeric";
-import Common "../src/common";
-import EightBit "../src/eight-bit";
-import Kanji "../src/kanji";
+import Alphanumeric "Alphanumeric";
+import Common "Common";
+import EightBit "EightBit";
+import Kanji "Kanji";
 import List "mo:base/List";
-import Numeric "../src/numeric";
-import Version "../src/version";
+import Numeric "Numeric";
+import Version "Version";
 
 module {
 

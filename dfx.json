@@ -1,22 +1,22 @@
 {
   "canisters": {
     "demo": {
-      "main": "app/demo.mo"
+      "main": "app/Demo.mo"
     },
     "format": {
-      "main": "test/format.mo"
+      "main": "test/Format.mo"
     },
     "galois": {
-      "main": "test/galois.mo"
+      "main": "test/Galois.mo"
     },
     "qr": {
-      "main": "app/qr.mo"
+      "main": "app/Main.mo"
     },
     "test": {
-      "main": "app/test.mo"
+      "main": "test/Main.mo"
     },
     "version": {
-      "main": "test/version.mo"
+      "main": "test/Version.mo"
     }
   }
 }

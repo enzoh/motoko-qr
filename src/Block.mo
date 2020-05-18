@@ -1,17 +1,17 @@
 /**
- * Module     : block.mo
+ * Module     : Block.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Stable
  */
 
-import Common "common";
-import Galois "galois";
+import Common "Common";
+import Galois "Galois";
 import List "mo:base/List";
-import Nat "nat";
+import Nat "Nat";
 import Option "mo:base/Option";
-import Version "version";
+import Version "Version";
 
 module {
 

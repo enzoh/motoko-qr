@@ -1,5 +1,5 @@
 /**
- * Module     : common.mo
+ * Module     : Common.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -7,10 +7,10 @@
  */
 
 import Array "mo:base/Array";
-import Galois "galois";
+import Galois "Galois";
 import List "mo:base/List";
 import Prelude "mo:base/Prelude";
-import Version "version";
+import Version "Version";
 
 module {
 

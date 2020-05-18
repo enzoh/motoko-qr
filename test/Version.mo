@@ -1,5 +1,5 @@
 /**
- * Module     : version.mo
+ * Module     : Version.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -7,8 +7,8 @@
  */
 
 import List "mo:base/List";
-import Nat "../src/nat";
-import Version "../src/version";
+import Nat "../src/Nat";
+import Version "../src/Version";
 
 actor {
 

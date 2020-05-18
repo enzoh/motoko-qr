@@ -1,5 +1,5 @@
 /**
- * Module     : alphanumeric.mo
+ * Module     : Alphanumeric.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
@@ -7,17 +7,17 @@
  */
 
 import Array "mo:base/Array";
-import Common "common";
+import Common "Common";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
-import Nat "nat";
+import Nat "Nat";
 import Option "mo:base/Option";
 import Prelude "mo:base/Prelude";
 import Prim "mo:prim";
 import Text "mo:base/Text";
 import Trie "mo:base/Trie";
-import Util "util";
-import Version "version";
+import Util "Util";
+import Version "Version";
 
 module {
 

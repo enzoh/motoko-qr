@@ -1,12 +1,12 @@
 /**
- * Module     : galois.mo
+ * Module     : Galois.mo
  * Copyright  : 2020 DFINITY Stiftung
  * License    : Apache 2.0 with LLVM Exception
  * Maintainer : Enzo Haussecker <enzo@dfinity.org>
  * Stability  : Stable
  */
 
-import Galois "../src/galois";
+import Galois "../src/Galois";
 import Iter "mo:base/Iter";
 
 actor {
