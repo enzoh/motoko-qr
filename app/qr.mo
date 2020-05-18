@@ -6,13 +6,13 @@
  * Stability  : Stable
  */
 
-import Array "mo:stdlib/array";
+import Array "mo:base/Array";
 import Block "../src/block";
 import Common "../src/common";
 import Generic "../src/generic";
-import List "mo:stdlib/list";
+import List "mo:base/List";
 import Mask "../src/mask";
-import Option "mo:stdlib/option";
+import Option "mo:base/Option";
 import Symbol "../src/symbol";
 import Version "../src/version";
 

@@ -7,8 +7,8 @@
  */
 
 import Common "common";
-import List "mo:stdlib/list";
-import Option "mo:stdlib/option";
+import List "mo:base/List";
+import Option "mo:base/Option";
 import Symbol "symbol";
 import Version "version";
 

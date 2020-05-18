@@ -6,8 +6,8 @@
  * Stability  : Experimental
  */
 
-import List "mo:stdlib/list";
-import Prelude "mo:stdlib/prelude";
+import List "mo:base/List";
+import Prelude "mo:base/Prelude";
 import Version "version";
 
 module {

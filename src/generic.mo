@@ -10,7 +10,7 @@ import Alphanumeric "../src/alphanumeric";
 import Common "../src/common";
 import EightBit "../src/eight-bit";
 import Kanji "../src/kanji";
-import List "mo:stdlib/list";
+import List "mo:base/List";
 import Numeric "../src/numeric";
 import Version "../src/version";
 

@@ -6,7 +6,7 @@
  * Stability  : Stable
  */
 
-import List "mo:stdlib/list";
+import List "mo:base/List";
 
 module Util {
 

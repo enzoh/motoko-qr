@@ -6,7 +6,7 @@
  * Stability  : Stable
  */
 
-import List "mo:stdlib/list";
+import List "mo:base/List";
 import Nat "../src/nat";
 import Version "../src/version";
 

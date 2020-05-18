@@ -6,11 +6,11 @@
  * Stability  : stable
  */
 
-import Array "mo:stdlib/array";
+import Array "mo:base/Array";
 import Common "common";
 import Format "format";
-import Iter "mo:stdlib/iter";
-import List "mo:stdlib/list";
+import Iter "mo:base/Iter";
+import List "mo:base/List";
 import Nat "nat";
 import Util "util";
 import Version "version";

@@ -8,9 +8,9 @@
 
 import Common "common";
 import Galois "galois";
-import List "mo:stdlib/list";
+import List "mo:base/List";
 import Nat "nat";
-import Option "mo:stdlib/option";
+import Option "mo:base/Option";
 import Version "version";
 
 module {

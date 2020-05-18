@@ -7,7 +7,7 @@
  */
 
 import Galois "../src/galois";
-import Iter "mo:stdlib/iter";
+import Iter "mo:base/Iter";
 
 actor {
 
