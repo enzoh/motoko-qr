@@ -1,9 +1,10 @@
-## The QR Canister
+The Motoko QR Package
+
 [![Build Status](https://travis-ci.org/enzoh/motoko-qr.svg?branch=master)](https://travis-ci.org/enzoh/motoko-qr?branch=master)
 
-### Prerequisites
+### Overview
 
-- [DFINITY SDK](https://sdk.dfinity.org)
+This package implements a QR-code generator.
 
 ### Demo
 
@@ -20,7 +21,7 @@ dfx build
 dfx canister install --all
 dfx canister call demo encode \
   '(variant{Version = 2}, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")' \
-  | sed 's/[(")]//g'
+  | sed 's/[(")]//g' \
   | sed 's/#/█/g'
 ```
 
