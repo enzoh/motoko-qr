@@ -7,6 +7,7 @@
  */
 
 import Array "mo:base/Array";
+import Debug "mo:base/Debug";
 import List "mo:base/List";
 import Nat "Nat";
 import Prelude "mo:base/Prelude";
@@ -49,7 +50,7 @@ module {
   public func log(n : Nat) : Nat {
     let m = n % 256;
     if (m == 0) {
-      Prelude.printLn("Error: Logarithm of zero is undefined in GF(256)!");
+      Debug.print("Error: Logarithm of zero is undefined in GF(256)!");
       Prelude.unreachable()
     };
     logs[m - 1]
@@ -87,7 +88,7 @@ module {
   public func alog(n : Nat) : Nat {
     let m = n % 256;
     if (m == 255) {
-      Prelude.printLn("Error: Antilogarithm of 255 is undefined in GF(256)!");
+      Debug.print("Error: Antilogarithm of 255 is undefined in GF(256)!");
       Prelude.unreachable()
     };
     alogs[m]
@@ -142,7 +143,7 @@ module {
   public func elemDiv(elem1 : Elem, elem2 : Elem) : Elem {
     switch (elem1.unbox, elem2.unbox) {
       case (_, 0) {
-        Prelude.printLn("Error: Division by zero is undefined in GF(256)!");
+        Debug.print("Error: Division by zero is undefined in GF(256)!");
         Prelude.unreachable()
       };
       case (0, _) { unbox = 0 };
@@ -162,7 +163,7 @@ module {
       List.push<Elem>(elemNew(n), accum)
     };
     let base = List.nil<Elem>();
-    { unbox = Array.foldr<Nat, List<Elem>>(step, base, coeffs) }
+    { unbox = Array.foldRight<Nat, List<Elem>>(coeffs, base, step) }
   };
 
   public func polyShow(poly : Poly) : Text {
@@ -187,7 +188,7 @@ module {
   };
 
   public func polyLen(poly : Poly) : Nat {
-    List.len<Elem>(poly.unbox)
+    List.size<Elem>(poly.unbox)
   };
 
   public func polyTrim(poly : Poly) : Poly {
@@ -244,7 +245,7 @@ module {
   };
 
   public func polyEq(poly1 : Poly, poly2 : Poly) : Bool {
-    List.isEq<Elem>(polyTrim(poly1).unbox, polyTrim(poly2).unbox, elemEq)
+    List.equal<Elem>(polyTrim(poly1).unbox, polyTrim(poly2).unbox, elemEq)
   };
 
   public func polyAdd(poly1 : Poly, poly2 : Poly) : Poly {

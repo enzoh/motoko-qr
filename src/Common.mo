@@ -7,6 +7,7 @@
  */
 
 import Array "mo:base/Array";
+import Debug "mo:base/Debug";
 import Galois "Galois";
 import List "mo:base/List";
 import Prelude "mo:base/Prelude";
@@ -254,11 +255,11 @@ module {
       case 28 [0,168,223,200,104,224,234,108,180,110,190,195,147,205,27,232,201,21,43,245,87,42,195,212,119,242,37,9,123];
       case 30 [0,41,173,145,152,216,31,179,182,50,48,110,86,239,96,222,125,42,173,226,193,224,130,156,37,251,216,238,40,192,180];
       case _ {
-        Prelude.printLn("Error: Invalid error size!");
+        Debug.print("Error: Invalid error size!");
         Prelude.unreachable()
       }
     };
-    Galois.polyNew(Array.map<Nat, Nat>(Galois.alog, logs))
+    Galois.polyNew(Array.map<Nat, Nat>(logs, Galois.alog))
   };
 
   public func cciLen(version : Version, mode : Mode) : Nat {
@@ -267,7 +268,7 @@ module {
       if (09 >= n and n >= 01) 0 else
       if (26 >= n and n >= 10) 1 else
       if (40 >= n and n >= 27) 2 else {
-      Prelude.printLn("Error: Invalid version!");
+      Debug.print("Error: Invalid version!");
       Prelude.unreachable()
     };
     switch mode {

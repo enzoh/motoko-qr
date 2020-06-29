@@ -14,7 +14,7 @@ actor {
 
   func runAnnexDTest() {
     let bits = Version.encode(#Version 7);
-    let n = List.len<Bool>(bits);
+    let n = List.size<Bool>(bits);
     assert (Nat.natFromBits(bits) == 31892);
     assert (n == 18)
   };

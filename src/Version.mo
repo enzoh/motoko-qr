@@ -9,7 +9,6 @@
 import Galois "Galois";
 import List "mo:base/List";
 import Nat "Nat";
-import Prelude "mo:base/Prelude";
 import Util "Util";
 
 module {

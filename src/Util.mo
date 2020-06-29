@@ -21,12 +21,12 @@ module {
   };
 
   public func padLeftTo(n : Nat, bits : List<Bool>) : List<Bool> {
-    let m = List.len<Bool>(bits);
+    let m = List.size<Bool>(bits);
     if (m > n) bits else padLeft(n - m, bits)
   };
 
   public func padRightTo(n : Nat, bits : List<Bool>) : List<Bool> {
-    let m = List.len<Bool>(bits);
+    let m = List.size<Bool>(bits);
     if (m > n) bits else padRight(n - m, bits)
   };
 

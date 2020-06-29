@@ -28,7 +28,7 @@ module {
     let mi = List.fromArray<Bool>([false, false, false, true]);
     let cci = Util.padLeftTo(
       Common.cciLen(version, #Numeric),
-      Nat.natToBits(text.len())
+      Nat.natToBits(text.size())
     );
 
     let header = List.append<Bool>(mi, cci);
@@ -38,7 +38,7 @@ module {
     };
 
     // 
-    let chunks = List.chunksOf<Char>(3, Iter.toList<Char>(Text.toIter(text)));
+    let chunks = List.chunks<Char>(3, Iter.toList<Char>(Text.toIter(text)));
 
     // 
     func step(chunk : List<Char>, accum : ?List<Bool>) : ?List<Bool> {
@@ -59,7 +59,7 @@ module {
   func parse(chunk : List<Char>) : ?List<Bool> {
 
     // 
-    let p = switch (List.len<Char>(chunk)) {
+    let p = switch (List.size<Char>(chunk)) {
       case 3 ?10;
       case 2 ?07;
       case 1 ?04;

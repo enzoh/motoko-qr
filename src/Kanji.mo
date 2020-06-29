@@ -6,6 +6,7 @@
  * Stability  : Experimental
  */
 
+import Debug "mo:base/Debug";
 import List "mo:base/List";
 import Prelude "mo:base/Prelude";
 import Version "Version";
@@ -16,7 +17,7 @@ module {
   type Version = Version.Version;
 
   public func encode(version : Version, text : Text) : ?List<Bool> {
-    Prelude.printLn("Error: Kanji mode is not yet implemented!");
+    Debug.print("Error: Kanji mode is not yet implemented!");
     Prelude.unreachable()
   };
 

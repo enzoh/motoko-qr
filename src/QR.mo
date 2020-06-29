@@ -31,13 +31,13 @@ module {
     mode : Mode,
     text : Text
   ) : ?Matrix {
-    Option.bind<Version, Matrix>(
+    Option.chain<Version, Matrix>(
       Version.new(Version.unbox(version)),
       func _ {
-        Option.bind<List<Bool>, Matrix>(
+        Option.chain<List<Bool>, Matrix>(
           Generic.encode(version, mode, text),
           func (data) {
-            Option.bind<List<Bool>, Matrix>(
+            Option.chain<List<Bool>, Matrix>(
               Block.interleave(version, level, data),
               func (code) {
                 let (arrays, maskRef) = Mask.generate(version, level, code);
@@ -56,12 +56,12 @@ module {
 
   public func show(matrix : Matrix) : Text {
     let #Matrix arrays = matrix;
-    Array.foldl<[Bool], Text>(func (accum1, array) {
-      Array.foldl<Bool, Text>(func (accum2, bit) {
+    Array.foldLeft<[Bool], Text>(arrays, "", func (accum1, array) {
+      Array.foldLeft<Bool, Text>(array, "\n", func (accum2, bit) {
         let text = if bit "##" else "  ";
         text # accum2
-      }, "\n", array) # accum1
-    }, "", arrays)
+      }) # accum1
+    })
   };
 
 }

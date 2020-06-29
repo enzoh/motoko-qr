@@ -1,2 +1,4 @@
 .dfx/
+.idea/
 build/
+canisters/

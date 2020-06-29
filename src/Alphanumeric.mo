@@ -8,6 +8,7 @@
 
 import Array "mo:base/Array";
 import Common "Common";
+import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
 import Nat "Nat";
@@ -30,7 +31,7 @@ module {
     let mi = List.fromArray<Bool>([false, false, true, false]);
     let cci = Util.padLeftTo(
       Common.cciLen(version, #Alphanumeric),
-      Nat.natToBits(text.len())
+      Nat.natToBits(text.size())
     );
 
     func format(body : List<Bool>) : List<Bool> {
@@ -44,7 +45,7 @@ module {
       Iter.toList<Char>(Text.toIter(text)),
       ?List.nil<Nat>(),
       func (char, accum) {
-        Option.bind<List<Nat>, List<Nat>>(
+        Option.chain<List<Nat>, List<Nat>>(
           accum,
           func (values) {
             Option.map<Nat, List<Nat>>(
@@ -63,7 +64,7 @@ module {
       Option.map<List<Nat>, List<Bool>>(
         func (values) {
           List.foldRight<List<Nat>, List<Bool>>(
-            List.chunksOf<Nat>(2, values),
+            List.chunks<Nat>(2, values),
             List.nil<Bool>(),
             func (chunk, accum) {
               List.append<Bool>(encodeChunkOrTrap(chunk), accum)
@@ -83,19 +84,19 @@ module {
       'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
       ' ', '$', '%', '*', '+', '-', '.', '/', ':'
     ];
-    Array.foldl<Char, (Trie<Char, Nat>, Nat)>(
+    Array.foldLeft<Char, (Trie<Char, Nat>, Nat)>(
+      chars,
+      (Trie.empty<Char, Nat>(), 0),
       func (accum, char) {
-        let table = Trie.insert<Char, Nat>(
+        let table = Trie.replace<Char, Nat>(
           accum.0,
           keyChar(char),
           eqChar,
-          accum.1
+          ?accum.1
         ).0;
         let i = accum.1 + 1;
         (table, i)
-      },
-      (Trie.empty<Char, Nat>(), 0),
-      chars
+      }
     ).0
   };
 
@@ -112,7 +113,7 @@ module {
       case (?(x, null)) Util.padLeftTo(6, Nat.natToBits(x));
       case (?(x, ?(y, null))) Util.padLeftTo(11, Nat.natToBits(x * 45 + y));
       case _ {
-        Prelude.printLn("Error: Invalid chunk size!");
+        Debug.print("Error: Invalid chunk size!");
         Prelude.unreachable();
       }
     }

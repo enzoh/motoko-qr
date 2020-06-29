@@ -36,8 +36,8 @@ module {
   public func natZipWith(a : Nat, b : Nat, f : (Word8, Word8) -> Word8) : Nat {
     var xs = natToBytes(a);
     var ys = natToBytes(b);
-    let xsLen = List.len<Word8>(xs);
-    let ysLen = List.len<Word8>(ys);
+    let xsLen = List.size<Word8>(xs);
+    let ysLen = List.size<Word8>(ys);
     if (xsLen < ysLen) {
       xs := List.append<Word8>(List.replicate<Word8>(ysLen - xsLen, 0), xs);
     };
