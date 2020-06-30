@@ -49,10 +49,10 @@ module {
           accum,
           func (values) {
             Option.map<Nat, List<Nat>>(
+              Trie.find<Char, Nat>(table, keyChar(char), eqChar),
               func (value) {
                 List.push<Nat>(value, values)
-              },
-              Trie.find<Char, Nat>(table, keyChar(char), eqChar)
+              }
             )
           }
         )
@@ -60,8 +60,8 @@ module {
     );
 
     Option.map<List<Bool>, List<Bool>>(
-      format,
       Option.map<List<Nat>, List<Bool>>(
+        transliteration,
         func (values) {
           List.foldRight<List<Nat>, List<Bool>>(
             List.chunks<Nat>(2, values),
@@ -70,9 +70,9 @@ module {
               List.append<Bool>(encodeChunkOrTrap(chunk), accum)
             }
           )
-        },
-        transliteration
-      )
+        }
+      ),
+      format
     )
   };
 

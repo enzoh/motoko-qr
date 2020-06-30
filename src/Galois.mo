@@ -171,7 +171,7 @@ module {
       case (null, _) { "[]" };
       case (?head, tail) {
         let base = elemShow(head);
-        func step(elem : Elem, accum : Text) : Text {
+        func step(accum : Text, elem : Elem) : Text {
           accum # "," # elemShow(elem)
         };
         "[" # List.foldLeft<Elem, Text>(tail, base, step) # "]"

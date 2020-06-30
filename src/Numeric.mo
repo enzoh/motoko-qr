@@ -50,8 +50,8 @@ module {
 
     // 
     Option.map<List<Bool>, List<Bool>>(
-      render,
-      List.foldRight<List<Char>, ?List<Bool>>(chunks, ?null, step)
+      List.foldRight<List<Char>, ?List<Bool>>(chunks, ?null, step),
+      render
     )
 
   };
@@ -67,14 +67,14 @@ module {
     };
 
     //
-    let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (char, accum) {
+    let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (accum, char) {
       if (Char.isDigit(char)) {
-        Option.map<Nat, Nat>(func (a) {
+        Option.map<Nat, Nat>(accum, func (a) {
           let b = Prim.word32ToNat(
             Prim.charToWord32(char) - Prim.charToWord32('0')
           );
           10 * a + b
-        }, accum)
+        })
       } else {
         null
       }

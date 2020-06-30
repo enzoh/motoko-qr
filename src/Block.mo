@@ -28,7 +28,7 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : ?List<Bool> {
-    Option.map<Blocks, List<Bool>>(func (blocks) {
+    Option.map<Blocks, List<Bool>>(toBlocks(version, level, data), func (blocks) {
 
       // Calculate the codewords for each data block, as well as the
       // corresponding error correction codewords.
@@ -51,7 +51,7 @@ module {
         List.replicate<Bool>(Common.remainder(version), false)
       ]))
 
-    }, toBlocks(version, level, data))
+    })
   };
 
   func toBlocks(
@@ -59,7 +59,7 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : ?Blocks {
-    Option.map<List<Bool>, Blocks>(func (target) {
+    Option.map<List<Bool>, Blocks>(toTarget(version, level, data), func (target) {
 
       func go(
         accum : Blocks,
@@ -81,7 +81,7 @@ module {
         List.fromArray<Nat>(Common.blockSizes(version, level))
       )
 
-    }, toTarget(version, level, data))
+    })
   };
 
   func toTarget(
