@@ -35,12 +35,5 @@ Execute the following commands in another tab.
 dfx canister create --all
 dfx build
 dfx canister install --all
-dfx canister call demo encode \
-  '(variant{Version = 2}, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")' \
-  | sed 's/[(")]//g' \
-  | sed 's/#/█/g'
+dfx canister call demo encode '(variant{Version = 1}, variant{Q}, variant{Alphanumeric}, "HELLO WORLD")'  | tr -d '(")' | sed 's/#/█/g'
 ```
-
-Observe the following result.
-
-![Result](img/demo.png)
