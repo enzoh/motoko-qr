@@ -28,30 +28,32 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : ?List<Bool> {
-    Option.map<Blocks, List<Bool>>(func (blocks) {
+    Option.map<Blocks, List<Bool>>(
+      toBlocks(version, level, data),
+      func (blocks) {
 
-      // Calculate the codewords for each data block, as well as the
-      // corresponding error correction codewords.
-      let (blockCodewords, errorCodewords) =
-        List.foldRight<Block, (List<Codewords>, List<Codewords>)>(
-          blocks,
-          (List.nil<Codewords>(), List.nil<Codewords>()),
-          func (block, accum) {
-            let a = List.chunks<Bool>(8, block);
-            let b = List.chunks<Bool>(8, correction(version, level, block));
-            ( List.push<Codewords>(a, accum.0),
-              List.push<Codewords>(b, accum.1)
-            )
-          }
-        );
+        // Calculate the codewords for each data block, as well as the
+        // corresponding error correction codewords.
+        let (blockCodewords, errorCodewords) =
+          List.foldRight<Block, (List<Codewords>, List<Codewords>)>(
+            blocks,
+            (List.nil<Codewords>(), List.nil<Codewords>()),
+            func (block, accum) {
+              let a = List.chunks<Bool>(8, block);
+              let b = List.chunks<Bool>(8, correction(version, level, block));
+              ( List.push<Codewords>(a, accum.0),
+                List.push<Codewords>(b, accum.1)
+              )
+            }
+          );
 
-      List.flatten<Bool>(List.fromArray<List<Bool>>([
-        flatten(blockCodewords),
-        flatten(errorCodewords),
-        List.replicate<Bool>(Common.remainder(version), false)
-      ]))
-
-    }, toBlocks(version, level, data))
+        List.flatten<Bool>(List.fromArray<List<Bool>>([
+          flatten(blockCodewords),
+          flatten(errorCodewords),
+          List.replicate<Bool>(Common.remainder(version), false)
+        ]))
+      }
+    )
   };
 
   func toBlocks(
@@ -59,29 +61,31 @@ module {
     level : ErrorCorrection,
     data : List<Bool>
   ) : ?Blocks {
-    Option.map<List<Bool>, Blocks>(func (target) {
+    Option.map<List<Bool>, Blocks>(
+      toTarget(version, level, data),
+      func (target) {
 
-      func go(
-        accum : Blocks,
-        chunks : List<List<Bool>>,
-        sizes : List<Nat>
-      ) : Blocks {
-        switch sizes {
-          case (null) List.reverse<Block>(accum);
-          case (?(h, t)) {
-            let (a, b) = List.split<List<Bool>>(h, chunks);
-            go(List.push<Block>(List.flatten<Bool>(a), accum), b, t)
+        func go(
+          accum : Blocks,
+          chunks : List<List<Bool>>,
+          sizes : List<Nat>
+        ) : Blocks {
+          switch sizes {
+            case (null) List.reverse<Block>(accum);
+            case (?(h, t)) {
+              let (a, b) = List.split<List<Bool>>(h, chunks);
+              go(List.push<Block>(List.flatten<Bool>(a), accum), b, t)
+            }
           }
-        }
-      };
+        };
 
-      go(
-        List.nil<Block>(),
-        List.chunks<Bool>(8, target),
-        List.fromArray<Nat>(Common.blockSizes(version, level))
-      )
-
-    }, toTarget(version, level, data))
+        go(
+          List.nil<Block>(),
+          List.chunks<Bool>(8, target),
+          List.fromArray<Nat>(Common.blockSizes(version, level))
+        )
+      }
+    )
   };
 
   func toTarget(

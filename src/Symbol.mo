@@ -359,7 +359,7 @@ module {
     List.foldLeft<Coordinate, List<Coordinate>>(
       patternCoords(version),
       traceCoords(version),
-      func ((r, c), coords) {
+      func (coords, (r, c)) {
         List.filter<Coordinate>(coords, func (x, y) {
           not ((x == r) and (y == c))
         })

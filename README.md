@@ -1,10 +1,25 @@
-The Motoko QR Package
+The QR Package
 
-[![Build Status](https://travis-ci.org/enzoh/motoko-qr.svg?branch=master)](https://travis-ci.org/enzoh/motoko-qr?branch=master)
+[![Build Status](https://github.com/enzoh/motoko-qr/workflows/build/badge.svg)](https://github.com/enzoh/motoko-qr/actions?query=workflow%3Abuild)
 
-### Overview
+This package implements a QR-code generator for the Motoko programming language.
 
-This package implements a QR-code generator.
+### Prerequisites
+
+- [DFINITY SDK](https://sdk.dfinity.org/docs/download.html) v0.5.11
+- [Vessel](https://github.com/kritzcreek/vessel/releases/tag/v0.4.1) v0.4.1 (Optional)
+
+### Usage
+
+Generate a QR-code.
+```motoko
+public func encode(
+  version : Version,
+  level : ErrorCorrection,
+  mode : Mode,
+  text : Text
+) : ?Matrix
+ ```
 
 ### Demo
 
@@ -17,6 +32,7 @@ dfx start
 Execute the following commands in another tab.
 
 ```
+dfx canister create --all
 dfx build
 dfx canister install --all
 dfx canister call demo encode \
