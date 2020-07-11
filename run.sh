@@ -17,4 +17,3 @@ dfx canister install --all
 dfx canister call test run
 dfx canister call demo encode '(variant{Version = 1}, variant{M}, variant{Numeric}, "01234567")'
 dfx canister call demo encode '(variant{Version = 1}, variant{Q}, variant{Alphanumeric}, "HELLO WORLD")'
-dfx canister call demo encode '(variant{Version = 2}, variant{M}, variant{Alphanumeric}, "HTTPS://SDK.DFINITY.ORG")'
