@@ -20,14 +20,10 @@ echo
 echo == Demo.
 echo
 
-echo
 echo 01234567
 echo
 dfx canister call demo encode '(variant{Version = 1}, variant{M}, variant{Numeric}, "01234567")'  | tr -d '(")' | sed 's/#/█/g'
 echo
-
-echo
 echo HELLO WORLD
 echo
 dfx canister call demo encode '(variant{Version = 1}, variant{Q}, variant{Alphanumeric}, "HELLO WORLD")'  | tr -d '(")' | sed 's/#/█/g'
-echo
