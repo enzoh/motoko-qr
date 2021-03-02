@@ -1,4 +1,4 @@
-The QR Package
+# The QR Package
 
 [![Build Status](https://github.com/enzoh/motoko-qr/workflows/build/badge.svg)](https://github.com/enzoh/motoko-qr/actions?query=workflow%3Abuild)
 
