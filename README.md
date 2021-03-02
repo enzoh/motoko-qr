@@ -32,8 +32,8 @@ dfx start
 Execute the following commands in another tab.
 
 ```
-dfx canister create --all
+dfx canister create demo
 dfx build
-dfx canister install --all
-dfx canister call demo encode '(variant{Version = 1}, variant{Q}, variant{Alphanumeric}, "HELLO WORLD")'  | tr -d '(")' | sed 's/#/█/g'
+dfx canister install demo
+dfx canister call demo encode '(variant{Version = 1}, variant{Q}, variant{Alphanumeric}, "HELLO WORLD")' | sed 's/#/█/g'
 ```

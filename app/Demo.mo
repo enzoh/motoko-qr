@@ -22,7 +22,7 @@ actor {
   ) : async Text {
     let result = await QR.encode(version, level, mode, text);
     switch result {
-      case (?matrix) await QR.show(matrix);
+      case (?matrix) "\n" # (await QR.show(matrix));
       case _ "Error: Invalid input!";
     }
   };

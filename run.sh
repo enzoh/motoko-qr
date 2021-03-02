@@ -1,6 +1,3 @@
-echo PATH = $PATH
-echo vessel @ `which vessel`
-
 echo
 echo == Build.
 echo
