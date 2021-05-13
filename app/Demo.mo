@@ -10,12 +10,6 @@ import QR "canister:qr";
 
 actor {
 
-/* BUG: rejected as cyclic
-  type ErrorCorrection_ = QR.ErrorCorrection;
-  type Mode = QR.Mode;
-  type Version = QR.Version;
-*/
-
   public func encode(
     version : QR.Version,
     level : QR.ErrorCorrection,
