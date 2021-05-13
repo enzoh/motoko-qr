@@ -10,14 +10,16 @@ import QR "canister:qr";
 
 actor {
 
-  type ErrorCorrection = QR.ErrorCorrection;
+/* BUG: rejected as cyclic
+  type ErrorCorrection_ = QR.ErrorCorrection;
   type Mode = QR.Mode;
   type Version = QR.Version;
+*/
 
   public func encode(
-    version : Version,
-    level : ErrorCorrection,
-    mode : Mode,
+    version : QR.Version,
+    level : QR.ErrorCorrection,
+    mode : QR.Mode,
     text : Text
   ) : async Text {
     let result = await QR.encode(version, level, mode, text);

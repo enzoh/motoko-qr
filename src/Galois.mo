@@ -11,7 +11,7 @@ import Debug "mo:base/Debug";
 import List "mo:base/List";
 import Nat "Nat";
 import Prelude "mo:base/Prelude";
-import Prim "mo:prim";
+import Int "mo:base/Int";
 import Util "Util"
 
 module {
@@ -212,7 +212,7 @@ module {
   };
 
   public func polyOrder(poly : Poly) : Int {
-    Prim.abs(polyLen(polyTrim(poly))) - 1
+    Int.abs(polyLen(polyTrim(poly))) - 1
   };
 
   public func polyLeadCoeff(poly : Poly) : Elem {
@@ -276,12 +276,12 @@ module {
   public type Term = { coeff : Elem; order : Int };
 
   public func polyAddTerm(poly : Poly, term : Term) : Poly {
-    let n = if (term.order <= 0) 0 else Prim.abs(term.order);
+    let n = if (term.order <= 0) 0 else Int.abs(term.order);
     polyAdd(poly, polyPadRight(n, polyNew([term.coeff.unbox])))
   };
 
   public func polyMulTerm(poly : Poly, term : Term) : Poly {
-    let n = if (term.order <= 0) 0 else Prim.abs(term.order);
+    let n = if (term.order <= 0) 0 else Int.abs(term.order);
     polyScale(term.coeff, polyPadRight(n, poly))
   };
 

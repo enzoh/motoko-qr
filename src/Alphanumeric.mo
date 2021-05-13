@@ -14,7 +14,7 @@ import List "mo:base/List";
 import Nat "Nat";
 import Option "mo:base/Option";
 import Prelude "mo:base/Prelude";
-import Prim "mo:prim";
+import Char "mo:base/Char";
 import Text "mo:base/Text";
 import Trie "mo:base/Trie";
 import Util "Util";
@@ -101,7 +101,7 @@ module {
   };
 
   func keyChar(char : Char) : Trie.Key<Char> {
-    { key = char; hash = Prim.charToWord32(char) };
+    { key = char; hash = Char.toNat32(char) };
   };
 
   func eqChar(a : Char, b : Char) : Bool {
