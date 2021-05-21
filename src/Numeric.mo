@@ -11,8 +11,9 @@ import Common "Common";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
 import Nat "Nat";
+import Nat32 "mo:base/Nat32";
 import Option "mo:base/Option";
-import Prim "mo:prim";
+import Int "mo:base/Int";
 import Text "mo:base/Text";
 import Util "Util";
 import Version "Version";
@@ -66,12 +67,12 @@ module {
       case _ null
     };
 
-    //
+    // 
     let n = List.foldLeft<Char, ?Nat>(chunk, ?0, func (accum, char) {
       if (Char.isDigit(char)) {
         Option.map<Nat, Nat>(accum, func (a) {
-          let b = Prim.word32ToNat(
-            Prim.charToWord32(char) -% Prim.charToWord32('0')
+          let b = Nat32.toNat(
+            Char.toNat32(char) - Char.toNat32('0')
           );
           10 * a + b
         })
